@@ -1,0 +1,135 @@
+﻿@model PlayerStatsViewModel
+@{
+    ViewBag.Title = "Player Stats";
+}
+@section Javascript
+{ 
+    <script async src="@Url.Content("~/Javascript/highcharts.js")"></script>
+    <script async src="@Url.Content("~/Javascript/PlayerStats.js")"></script>
+}
+@section Css{ <link rel="stylesheet" href="@Url.Content("/Css/Stats.css")"/>}
+
+<fieldset class="statistics">
+    <legend>Stats for @Model.Player.Name</legend>
+    <div class="second">
+        <div class="label">Player ranking:</div>
+        <div>@Model.Ranking <span class="thin">of</span> @Model.TotalNumberOfPlayers</div>
+        <div class="label">Elo rating:</div>
+        <div>@Model.Player.Rating.ToString("F2")</div>
+        <div class="label">Winning ratio:</div>
+        <div>@Model.Player.Ratio.ToString("F2")%</div>
+        <br/>
+        <div class="label">Fights Total:</div>
+        <div>@Model.Played</div>
+        <div class="label">Won Fights:</div>
+        <div>@Model.Won</div>
+        <div class="label">Lost Fights:</div>
+        <div>@Model.Lost</div>
+        <br/>
+    </div>
+        
+    <div class="second">
+        <div class="label" title="The BFF (Best Friend Forever) is the player together with whom @Model.Player.Name has fought most often">Best Friend Forever:</div>
+        <div>
+            @if (@Model.Bff != null)
+            {
+                <a href="@Url.Action("Player", "Stats", new { playerId = @Model.Bff.Player.Id})">@Model.Bff.Player.Name</a><text> - @Model.Bff.Occurrences fights</text>
+            } 
+            else
+            {
+                <text>no best friends :(</text>
+            }
+        </div>
+        <div class="label" title="The RBFF (Real Best Friend Forever) is the player together with whom @Model.Player.Name has won most fights">Real Best Friend Forever:</div>
+        <div>
+            @if (@Model.Rbff != null)
+            {
+                <a href="@Url.Action("Player", "Stats", new { playerId = @Model.Rbff.Player.Id})">@Model.Rbff.Player.Name</a><text> - @Model.Rbff.Occurrences wins</text>
+            }
+            else
+            {
+                <text> - </text>
+            }
+        </div>
+        <div class="label">Evil Arch Enemy:</div>
+        <div>
+            @if (@Model.Eae != null)
+            {
+                <a href="@Url.Action("Player", "Stats", new { playerId = @Model.Eae.Player.Id})">@Model.Eae.Player.Name</a><text> - @Model.Eae.Occurrences losses</text>
+            }
+            else
+            {
+                <text> - </text>
+            }
+        </div>
+
+        <br/>
+
+        <div class="label">Preferred Color:</div>
+        <div>
+            @if (@Model.PreferredColor != null)
+            {
+                <text>@Model.PreferredColor.Color - @Model.PreferredColor.Occurrences fights</text>
+            }
+        </div>
+        <div class="label">Winning Color:</div>
+        <div>
+            @if (@Model.WinningColor != null)
+            {
+                <text>@Model.WinningColor.Color - @Model.WinningColor.Occurrences wins</text>
+            }
+            else
+            {
+                <text>:-(</text>
+            }
+        </div>  
+        <br/>
+        <div class="label">Latest fight:</div>
+        <div>
+            @if (Model.LatestMatch.WonTheMatch(Model.Player.Id))
+            {
+                <text>beat up </text>
+            }
+            else
+            {
+                <text>was beat up by </text><br/>
+            }
+
+            @if (Model.LatestMatch.IsOnTeamA(Model.Player.Id))
+            {
+                <a href="@Url.Action("Player","Stats", new {playerId = @Model.LatestMatch.TeamBPlayer1.Id })">@Model.LatestMatch.TeamBPlayer1.Name</a>
+                if (@String.IsNullOrEmpty(Model.LatestMatch.TeamBPlayer2.Name) == false)
+                {
+                    <text>&</text>
+                    <a href="@Url.Action("Player","Stats", new {playerId = @Model.LatestMatch.TeamBPlayer2.Id })">@Model.LatestMatch.TeamBPlayer2.Name</a>
+                }
+            } 
+            else
+            {
+                <a href="@Url.Action("Player","Stats", new {playerId = @Model.LatestMatch.TeamAPlayer1.Id })">@Model.LatestMatch.TeamAPlayer1.Name</a>
+                if (@String.IsNullOrEmpty(Model.LatestMatch.TeamAPlayer2.Name) == false)
+                {
+                    <text>&</text>
+                    <a href="@Url.Action("Player","Stats", new {playerId = @Model.LatestMatch.TeamAPlayer2.Id })">@Model.LatestMatch.TeamAPlayer2.Name</a>
+                }
+            }
+        </div>
+    </div>
+</fieldset>
+
+<fieldset>
+    <legend>Rating  Chart</legend>
+    <div id="player-rating-chart" data-subject-id="@Model.Player.Id" data-subject-name="@Model.Player.Name"></div>
+</fieldset>
+
+<fieldset id="player-matches">
+    <legend>@(Model.Player.Name)s Fights</legend>
+    @if (Model.PlayedMatches.Any())
+    {
+        Html.RenderPartial("_LegendaryMatchTable", new MatchTableViewModel { Matches = Model.PlayedMatches, User = null });
+    }
+    else
+    {
+        <text><span class="dimmed">Hrmmm... Guess Foosball is not a very popular sport around here...</span></text>
+    }
+</fieldset>

@@ -1,0 +1,13 @@
+﻿@if (Session["IsLoggedIn"].ToString().ToLower() == "true")
+{
+    var user = (Player)Session["User"];
+    <text>Hi </text><span class="user-name">@user.Name</span>
+    <span>
+        [ @Html.ActionLink("Account", "Edit", "Account", new {id = user.Id}, null) &middot; @Html.ActionLink("Log Off", "LogOff", "Account") ]
+    </span>
+}
+else 
+{
+    @Html.ActionLink("Log on", "LogOn", "Account") <text>or</text> @Html.ActionLink("Sign up", "Register", "Account")
+}
+<a class="menu-list-button" href="#"></a>

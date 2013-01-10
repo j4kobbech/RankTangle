@@ -1,0 +1,82 @@
+﻿@model MatchTableViewModel
+@{
+    var currentUser = (Player)HttpContext.Current.Session["User"];
+}   
+@if (currentUser != null)
+{
+    <input type="hidden" value="@currentUser.Id" name="current-user-id" id="current-user-id"/>
+}
+    
+<table id="legendary-matches">
+    <thead>
+        <tr>
+            <th class="team-a team-names">TeamA team</th>
+            <th class="team-b team-names">TeamB team</th>
+            <th class="score">Result</th>
+            <th class="played">Played</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var match in Model.Matches)
+        {
+            <tr>
+                @* TeamA Teams names and Nicknames *@
+                <td class="team-a team-names @if (match.TeamAScore > match.TeamBScore) { <text>winner</text> }">
+                    <span class="names">
+                        <a class="@match.TeamAPlayer1.Id" href="@Url.Action("Player","Stats", new {playerId = @match.TeamAPlayer1.Id })">@match.TeamAPlayer1.Name</a>
+                        @if (match.CountTeamAPlayers() == 2)
+                        {
+                            <br/>
+                            <a class="@match.TeamAPlayer2.Id" href="@Url.Action("Player","Stats", new {playerId = @match.TeamAPlayer2.Id })">@match.TeamAPlayer2.Name</a>
+                        }
+                    </span>
+                    <span class="nicknames">
+                        <a class="@match.TeamAPlayer1.Id" href="@Url.Action("Player","Stats", new {playerId = @match.TeamAPlayer1.Id })">@match.TeamAPlayer1.NickName</a>
+                        @if (match.CountTeamAPlayers() == 2)
+                        {
+                            <br/>
+                            <a class="@match.TeamAPlayer2.Id" href="@Url.Action("Player","Stats", new {playerId = @match.TeamAPlayer2.Id })">@match.TeamAPlayer2.NickName</a>
+                        }
+                    </span>
+                </td>
+                
+                @* TeamB Teams names and Nicknames *@
+                <td class="team-b team-names @if (match.TeamBScore > match.TeamAScore) { <text>winner</text> }">
+                    <span class="names">
+                        <a class="@match.TeamBPlayer1.Id" href="@Url.Action("Player","Stats", new {playerId = @match.TeamBPlayer1.Id })">@match.TeamBPlayer1.Name</a>
+                        @if (match.CountTeamBPlayers() == 2)
+                        {
+                            <br/>
+                            <a class="@match.TeamBPlayer2.Id" href="@Url.Action("Player","Stats", new {playerId = @match.TeamBPlayer2.Id })">@match.TeamBPlayer2.Name</a>
+                        }
+                    </span>
+                    <span class="nicknames">
+                        <a class="@match.TeamBPlayer1.Id" href="@Url.Action("Player","Stats", new {playerId = @match.TeamBPlayer1.Id })">@match.TeamBPlayer1.NickName</a>
+                        @if (match.CountTeamBPlayers() == 2)
+                        {
+                            <br/>
+                            <a class="@match.TeamBPlayer2.Id" href="@Url.Action("Player","Stats", new {playerId = @match.TeamBPlayer2.Id })">@match.TeamBPlayer2.NickName</a>
+                        }
+                    </span>
+                </td>
+                <td class="score">
+                    <span class="team-a @if (match.TeamAScore > match.TeamBScore)
+                                     { <text>winner</text> }">
+                        @match.TeamAScore
+                    </span>
+                    -
+                    <span class="team-b @if (match.TeamBScore > match.TeamAScore)
+                                      { <text>winner</text> }">
+                        @match.TeamBScore
+                    </span>
+                </td>
+                <td class="played" title="@match.GameOverTime.ToLocalTime().ToString("d MMM yy, HH:mm", CultureInfo.CreateSpecificCulture("en-gb"))">
+                    <span class="short-time">@match.GameOverTime.ToLocalTime().ToString("dd MMM", CultureInfo.CreateSpecificCulture("en-gb"))</span>
+                    <span class="long-time" title="@match.GameOverTime.ToLocalTime().ToString("d MMM yy, HH:mm:ss", CultureInfo.CreateSpecificCulture("en-gb"))">
+                        @match.GameOverTime.ToLocalTime().ToString("d MMM yy, HH:mm", CultureInfo.CreateSpecificCulture("en-gb"))
+                    </span>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

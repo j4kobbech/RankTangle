@@ -1,0 +1,29 @@
+﻿@model PlayerBaseDataViewModel
+
+@{
+    ViewBag.Title = "Register User";
+}
+
+@section Javascript{ <script async src="@Url.Content("~/Javascript/Register.js")"></script> }
+@section Css{ <link rel="stylesheet" href="/Css/Account.css"/>}
+
+
+<h3>Register a New User</h3>
+<p>All fields are required to register.</p>
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new{ name = "register-player" }))
+{
+    <div>
+        @Html.Partial("_PlayerBaseData", Model)
+
+        <div>@Html.LabelFor(m => Model.Player.Password, "Repeat password")</div>
+        <div>@Html.Password("Password", null, new { placeholder = "Repeat password", @id = "Player_RepeatPassword" })</div>
+
+        <div class="validation-message small All"></div>
+        <div class="validation-message small Email"></div>
+        <div class="validation-message small Name"></div>
+        <div class="validation-message small Password"></div>
+
+        <p><input class="button" type="submit" value="Register" /></p>
+    </div>
+}

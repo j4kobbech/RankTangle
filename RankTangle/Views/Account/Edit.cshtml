@@ -1,0 +1,26 @@
+﻿@model PlayerBaseDataViewModel
+@{
+    ViewBag.Title = "Account info";
+}
+@section Javascript{ <script async src="@Url.Content("~/Javascript/Register.js")"></script> }
+@section Css{ <link rel="stylesheet" href="/Css/Players.css"/>}
+
+@using (Html.BeginForm("Edit", "Account", FormMethod.Post, new { id = "edit-player" }))
+{
+    <h3>@(Model.Player.Name)'s account</h3>
+    
+    @Html.Partial("_PlayerBaseData", Model)
+
+    <div class="validation-message"></div>
+    
+    if (Model.SaveSuccess)
+    {
+        <div class="infobox">Save Succesful!</div>
+    }
+       
+    <div class="form-button">
+        <input type="submit" value="Save Player" class="submit-button button" id="edit-player-button"/>
+    </div>
+    <br />    
+    <a id="go-back" href="@Model.ReferralUrl">Go Back</a>
+}

@@ -1,0 +1,68 @@
+@model ConfigViewModel
+@{
+    ViewBag.Title = "Configuration";
+}
+
+@section Javascript
+{ 
+    <script async src="@Url.Content("~/Javascript/Admin.js")"></script> 
+}
+@section Css { <link rel="stylesheet" href="/Css/Admin.css"/> }
+
+<div>
+    <fieldset id="app-configuration">
+        <legend>Configuration</legend>
+        @using (Html.BeginForm("Save", "Admin", FormMethod.Post))
+        {
+
+            @Html.LabelFor(m => m.Settings.Name, "Application name")
+            @Html.TextBoxFor(m => m.Settings.Name)
+            
+            @Html.LabelFor(m => m.Settings.AdminAccount, "Administrator (email)")
+            @Html.TextBoxFor(m => m.Settings.AdminAccount)
+            
+            @Html.LabelFor(m => m.Settings.EnableDomainValidation, "Enable domain validation?")
+            @Html.CheckBoxFor(m => m.Settings.EnableDomainValidation)
+            @Html.TextBoxFor(m => m.Settings.Domain)
+
+            @Html.LabelFor(m => m.Settings.EnableOneOnOneMatches, "Enable one-on-one matches?")
+            @Html.CheckBoxFor(m => m.Settings.EnableOneOnOneMatches)
+            
+            @Html.LabelFor(m => m.Settings.EnableGenderSpecificMatches, "Enable gender specific matches?")
+            @Html.CheckBoxFor(m => m.Settings.EnableGenderSpecificMatches)
+            
+            <input name="save-config" type="submit" value="Save" class="button"/>
+        }
+    </fieldset>
+
+    <fieldset id="data-migration">
+        <legend>Copy Mongo data</legend>
+        <button class="button" id="copy-prod-to-staging">Copy Production Data to Staging</button>
+    </fieldset>
+
+    <fieldset id="data-repair">
+        <legend>Replay Matches</legend>
+        <button class="button" id="replay-matches">Replay all @Model.Settings.Name matches</button>
+    </fieldset>
+
+    <fieldset id="player-emails">
+        <legend>Player emails</legend>
+        <div id="list-of-emails"></div>
+        <button class="button" id="list-player-emails">List Player Emails</button>
+    </fieldset>
+
+    <fieldset id="player-editor">
+        <legend>Edit Players (experimental)</legend>
+    
+        @Html.LabelFor(m => Model.Users, "Choose a player")
+        <select id="select-player" name="select-player">
+            <option></option>
+            @foreach (var user in Model.Users)
+            {
+                <option id="@user.Value" value="@user.Value">@user.Text</option>
+            }
+        </select>
+    
+        <div id="player-data"></div>
+    </fieldset>
+</div>

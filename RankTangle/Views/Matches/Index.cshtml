@@ -1,0 +1,26 @@
+﻿@model MatchesViewModel
+@{
+    ViewBag.Title = "Matches";
+    var currentUser = (Player)HttpContext.Current.Session["User"];
+}
+@section Javascript{ <script async src="@Url.Content("~/Javascript/Matches.js")"></script> }
+@section Css{ <link rel="stylesheet" href="/Css/Matches.css"/>}
+
+@if (currentUser != null)
+{
+    @Html.Partial("_RegisterMatch", Model)
+}
+else
+{
+    <p>@Html.ActionLink("Log on", "LogOn", "Account") to register matches</p>
+}
+
+<h3>Latest Matches</h3>
+@if (Model.PlayedMatches.Any())
+{
+    Html.RenderPartial("_LegendaryMatchTable", new MatchTableViewModel { Matches = Model.PlayedMatches, User = currentUser });
+}
+else
+{
+    <span class="dimmed">Hrmmm... Guess Foosball is not a very popular sport around here...</span>
+}

@@ -1,0 +1,40 @@
+﻿@model LogOnViewModel
+
+@{
+    ViewBag.Title = "Log On";
+}
+
+@section Javascript { <script async src="@Url.Content("~/Javascript/LogOn.js")"></script> }
+@section Css{ <link rel="stylesheet" href="/Css/Account.css"/>}
+
+<h3>Log On</h3>
+
+@using (Html.BeginForm("LogOn", "Account", FormMethod.Post, new { name = "logon-player" }))
+{   @Html.HiddenFor(m => m.RefUrl)
+    <div>
+        <div>@Html.LabelFor(m => m.Email)</div>
+        <div>
+            @Html.TextBoxFor(m => m.Email, new { placeholder = "Email", @class = Model.Settings.EnableDomainValidation ? "short" : "long" })
+            @if (Model.Settings.EnableDomainValidation)
+            {
+                <text>@@trustpilot.com</text>
+            }
+        </div>
+        <br>
+        <div>@Html.LabelFor(m => m.Password)</div>
+        <div>@Html.PasswordFor(m => m.Password, new { placeholder = "Password", autocapitalize = "off", autocorrect = "off"})</div>
+        <br>
+        <div class="validation-message small All"></div>
+        @if (Model.LogOnError)
+        {
+            <div class="validation-message Auth show">Email or password is incorrect. Try again.</div>
+        }
+        <br/>
+        <div>
+            @Html.CheckBoxFor(m => m.RememberMe)
+            @Html.LabelFor(m => m.RememberMe)
+        </div>
+
+        <p><input class="button" type="submit" value="Log On" /></p>
+    </div>
+}
