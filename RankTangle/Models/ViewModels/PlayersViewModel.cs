@@ -1,9 +1,8 @@
 ﻿namespace RankTangle.Models.ViewModels
 {
     using System.Collections.Generic;
-
-    using RankTangle.Models.Domain;
     using RankTangle.Models.Base;
+    using RankTangle.Models.Domain;
 
     public class PlayersViewModel : BaseViewModel
     {

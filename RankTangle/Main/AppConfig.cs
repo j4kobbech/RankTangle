@@ -1,14 +1,13 @@
 ﻿namespace RankTangle.Main
 {
     using System.Configuration;
-    using System.Linq;
 
     using RankTangle.Models.Base;
     using RankTangle.Models.Domain;
 
     public static class AppConfig
     {
-        public static void InitalizeConfig()
+        public static void InitalizeConfig() 
         {
             var environment = GetEnvironment();
             var configCollection = new Db(environment).Dbh.GetCollection<Config>("Config");

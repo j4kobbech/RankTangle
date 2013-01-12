@@ -1,0 +1,137 @@
+// Import mixins
+@import "_mixins";
+
+/* Player View
+----------------------------------------------------------*/
+.player {
+    margin: 15px 0;
+    padding: 15px 0;
+    width: 99%;
+    border-bottom: 1px solid $light;
+
+    .ranking {
+        float: left;
+        font-size: 26px;
+        font-weight: bold;
+        color: #D1D1D1;
+        margin-right: 0;
+        margin-top: 9px;
+        width: 40px;
+    }
+    .avatar {
+        float: left;
+        margin-right: 5px;
+        margin-left: 2px;
+        .gravatar {
+            height: 48px;
+            border-radius: 48px;
+        }
+    }
+    .name {
+        float: left;
+        width: 60%;
+        margin-top: 4px;
+        margin-left: 3px;
+        line-height: 1.3em;
+
+        sup {
+            color: $font-color-dimmed;
+            font-size: 10px;
+            margin-left: 2px;
+            margin-right: 5px;
+        }
+    }
+    .nickname {
+        display: none;
+    }
+}
+.won-lost-played {
+    display: inline;
+    color: $font-color-dimmed;
+    span {
+        color: #222;
+    }
+    .won {
+        color: green;
+    }
+    .lost {
+        color: red;
+    }
+}
+
+#edit-player-form {
+    label, input {
+        display: block;
+    }
+    #Email {
+        display: inline;
+    }
+    input[type="text"], input[type="email"], input[type="password"] {
+        margin: 2px 0;
+    }
+}
+
+#profile-gravatar {
+    @include gravatar-large
+}
+
+@media only screen and (min-width : 470px) {
+    #list-of-players {
+        .player {
+            .name { width: 70%; }
+            .nickname { display: inline; }
+        }
+    }
+}
+
+/* Player Details View
+----------------------------------------------------------*/
+#stats-title {
+    width: 99%;
+    text-align: center;
+}
+#player-stats {
+    div {
+        float: left;
+    }
+    .label {
+        clear: left;
+        width: 80px;
+    }
+
+}
+#player-match-history {
+    font-size: .85em;
+    font-weight: normal;
+    div {
+        float: left;
+        margin-left: 3px;
+    }
+    .date {
+        clear: both;
+        font-weight: bold;
+    }
+    .name {
+        display: none;
+    }
+    .time {
+        clear: left;
+    }
+}
+
+@media only screen and (min-width : 470px) {
+    #player-match-history {
+        .name {
+            display: block;
+        }
+        .nickname {
+            display: none;
+        }
+    }
+}
+
+
+
+#go-back {
+    text-decoration: underline;
+}

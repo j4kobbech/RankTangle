@@ -1,0 +1,97 @@
+/* Player View
+----------------------------------------------------------*/
+.player {
+  margin: 15px 0;
+  padding: 15px 0;
+  width: 99%;
+  border-bottom: 1px solid #dddddd; }
+  .player .ranking {
+    float: left;
+    font-size: 26px;
+    font-weight: bold;
+    color: #D1D1D1;
+    margin-right: 0;
+    margin-top: 9px;
+    width: 40px; }
+  .player .avatar {
+    float: left;
+    margin-right: 5px;
+    margin-left: 2px; }
+    .player .avatar .gravatar {
+      height: 48px;
+      border-radius: 48px; }
+  .player .name {
+    float: left;
+    width: 60%;
+    margin-top: 4px;
+    margin-left: 3px;
+    line-height: 1.3em; }
+    .player .name sup {
+      color: #999999;
+      font-size: 10px;
+      margin-left: 2px;
+      margin-right: 5px; }
+  .player .nickname {
+    display: none; }
+
+.won-lost-played {
+  display: inline;
+  color: #999999; }
+  .won-lost-played span {
+    color: #222; }
+  .won-lost-played .won {
+    color: green; }
+  .won-lost-played .lost {
+    color: red; }
+
+#edit-player-form label, #edit-player-form input {
+  display: block; }
+#edit-player-form #Email {
+  display: inline; }
+#edit-player-form input[type="text"], #edit-player-form input[type="email"], #edit-player-form input[type="password"] {
+  margin: 2px 0; }
+
+#profile-gravatar {
+  border: 4px solid #dddddd;
+  height: 80px;
+  margin: 4px; }
+
+@media only screen and (min-width: 470px) {
+  #list-of-players .player .name {
+    width: 70%; }
+  #list-of-players .player .nickname {
+    display: inline; } }
+/* Player Details View
+----------------------------------------------------------*/
+#stats-title {
+  width: 99%;
+  text-align: center; }
+
+#player-stats div {
+  float: left; }
+#player-stats .label {
+  clear: left;
+  width: 80px; }
+
+#player-match-history {
+  font-size: .85em;
+  font-weight: normal; }
+  #player-match-history div {
+    float: left;
+    margin-left: 3px; }
+  #player-match-history .date {
+    clear: both;
+    font-weight: bold; }
+  #player-match-history .name {
+    display: none; }
+  #player-match-history .time {
+    clear: left; }
+
+@media only screen and (min-width: 470px) {
+  #player-match-history .name {
+    display: block; }
+  #player-match-history .nickname {
+    display: none; } }
+#go-back {
+  text-decoration: underline; }
+

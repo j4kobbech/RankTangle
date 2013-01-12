@@ -1,0 +1,91 @@
+// Import mixins
+@import "_mixins";
+@import "_match-tables";
+
+/* Match View
+----------------------------------------------------------*/
+#submit-match-form {
+    display: none;
+    margin-top: 20px;
+}
+
+.team {
+    margin-top: 3px;
+    width: 45%;
+    text-align: center;
+}
+.team-a, #team-a-players {
+    float: left;
+    clear: left;
+    .team-name {
+        color: $team-a-color;
+    }
+}
+.vs {
+    float: left;
+    margin-top: 3px;
+    text-align: center;
+    vertical-align: middle;
+    width: 10%;
+}
+.team-b, #team-b-players, .team-b-score {
+    float: right;
+    clear: right;
+    .team-name {
+        color: $team-b-color;
+    }
+}
+#create-match-button {
+    margin-top: 10px;
+}
+
+/* SaveMatchResult View
+----------------------------------------------------------*/
+.team-score {
+    height: 40px;
+    width: 40px!important;
+    font-size: 22px;
+    text-align: center;
+    margin: 5px auto 0 auto;
+}
+.score-slider {
+    -webkit-appearance: slider-vertical;
+    overflow: -moz-scrollbars-vertical;
+    height: 100px;
+    width: 40px;
+    margin: 10px auto 15px auto;
+    display: block;
+}
+#team-red-players {
+    float: left;}
+#team-blue-players {
+    float: right;}
+
+.team-scores {
+    display: none;
+}
+    #team-results {
+        clear: both;
+    }
+    .opponent {
+        padding: 20px 0;
+
+        input {
+            width: 40px;
+            margin: 0 auto;
+            display: block;
+        }
+    }
+    #fighting-team-a
+    {
+        float: left;
+        width: 45%;
+    }
+    #fighting-team-b {
+        float: right;
+        width: 45%;
+    }
+.names sup, .nicknames sup {
+    font-weight: normal;
+    margin-left: 3px;
+}

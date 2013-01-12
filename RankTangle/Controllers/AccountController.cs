@@ -1,5 +1,7 @@
 ﻿namespace RankTangle.Controllers
 {
+    using System;
+    using System.Web;
     using System.Web.Mvc;
     using MongoDB.Bson;
     using MongoDB.Driver.Builders;
@@ -10,6 +12,79 @@
 
     public class AccountController : BaseController
     {
+        public static string GetAuthToken(Player player)
+        {
+            return Md5.CalculateMd5(player.Id + player.Email + "RankTangle4Ever");
+        }
+
+        // COOKIE DOUGH
+        public void CreateRememberMeCookie(Player player)
+        {
+            HttpContext.Response.Cookies.Add(new HttpCookie("RankTangleAuth"));
+            var httpCookie = ControllerContext.HttpContext.Response.Cookies["RankTangleAuth"];
+            if (httpCookie != null)
+            {
+                httpCookie["Token"] = GetAuthToken(player);
+            }
+
+            if (httpCookie != null)
+            {
+                httpCookie.Expires = DateTime.Now.AddDays(30);
+            }
+        }
+
+        public void RemoveRememberMeCookie()
+        {
+            ControllerContext.HttpContext.Response.Cookies.Add(new HttpCookie("RankTangleAuth"));
+            var httpCookie = ControllerContext.HttpContext.Response.Cookies["RankTangleAuth"];
+            if (httpCookie != null)
+            {
+                httpCookie.Expires = DateTime.Now.AddDays(-1);
+            }
+        }
+
+        public bool Login(Player player)
+        {
+            // Set or remove cookie for future auto-login
+            if (player != null)
+            {
+                if (player.RememberMe)
+                {
+                    // Save an autologin token as cookie and in the Db
+                    var playerCollection = this.Dbh.GetCollection<Player>("Players");
+                    var autoLoginCollection = this.Dbh.GetCollection<AutoLogin>("AutoLogin");
+                    var autoLogin = autoLoginCollection.FindOne(Query.EQ("Email", player.Email));
+
+                    if (autoLogin == null)
+                    {
+                        autoLogin = new AutoLogin
+                        {
+                            Email = player.Email,
+                            Token = GetAuthToken(player),
+                            Created = DateTime.Now
+                        };
+                        autoLoginCollection.Save(autoLogin);
+                    }
+
+                    CreateRememberMeCookie(player);
+                    player.RememberMe = player.RememberMe;
+                    playerCollection.Save(player);
+                }
+                else
+                {
+                    RemoveRememberMeCookie();
+                }
+
+                this.Session["Admin"] = this.Settings.AdminAccount == player.Email;
+                this.Session["IsLoggedIn"] = true;
+                this.Session["User"] = player;
+
+                return true;
+            }
+
+            return false;
+        }
+
         public ActionResult LogOn()
         {
             if (Session["IsLoggedIn"] == null || Session["IsLoggedIn"].ToString() == "false")
@@ -39,10 +114,11 @@
             }
 
             var urlReferrer = this.Request.UrlReferrer;
-            var viewModel = new LogOnViewModel { RefUrl = urlReferrer.ToString(), Settings = this.Settings };
 
             if (urlReferrer != null)
             {
+                var viewModel = new LogOnViewModel { RefUrl = urlReferrer.ToString(), Settings = this.Settings };
+
                 return this.View(viewModel);
             }
 
@@ -52,6 +128,7 @@
         [HttpPost]
         public ActionResult LogOn(LogOnViewModel model)
         {
+            model.Settings = this.Settings;
             var email = model.Email.ToLower();
             if (this.Settings.EnableDomainValidation)
             {

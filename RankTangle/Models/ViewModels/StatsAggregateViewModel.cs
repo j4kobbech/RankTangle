@@ -5,6 +5,8 @@
 
     public class StatsAggregateViewModel
     {
+        public long MatchCount { get; set; }
+
         public Player MostFights { get; set; }
 
         public Player MostWins { get; set; }

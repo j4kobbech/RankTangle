@@ -1,12 +1,12 @@
 ﻿@model HomeViewModel
 @{
-    ViewBag.Title = "Home of FoosBall'ers";
+    ViewBag.Title = "Home of " + @Model.Settings.Name;
 }
 
 @section Javascript
 { 
     <script async src="@Url.Content("~/Javascript/Home.js")"></script> 
 }
-@section Css{ <link rel="stylesheet" href="/Css/Home.css"/>}
+@section Css{ <link rel="stylesheet" href="@Url.Content("~/Css/Home.css")"/>}
 
 <h2 id="welcome-message">@Model.Settings.Name</h2>

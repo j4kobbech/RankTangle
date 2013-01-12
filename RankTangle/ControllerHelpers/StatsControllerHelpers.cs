@@ -2,19 +2,17 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-
+    using MongoDB.Driver;
+    using MongoDB.Driver.Builders;
     using RankTangle.Main;
     using RankTangle.Models.Custom;
     using RankTangle.Models.Domain;
-
-    using MongoDB.Driver;
-    using MongoDB.Driver.Builders;
 
     public static class StatsControllerHelpers
     {
         private static readonly MongoDatabase Dbh = new Db(AppConfig.GetEnvironment()).Dbh;
 
-        public static Player GetStatMostFights()
+        public static Player GetMostFights()
         {
             return Dbh.GetCollection<Player>("Players")
                     .FindAll()
@@ -22,7 +20,7 @@
                     .FirstOrDefault();
         }
 
-        public static Player GetStatMostWins()
+        public static Player GetMostWins()
         {
             return Dbh.GetCollection<Player>("Players")
                     .FindAll()
@@ -30,7 +28,7 @@
                     .FirstOrDefault();
         }
 
-        public static Player GetStatMostLosses()
+        public static Player GetMostLosses()
         {
             return Dbh.GetCollection<Player>("Players")
                     .FindAll()
@@ -38,7 +36,7 @@
                     .FirstOrDefault();
         }
 
-        public static Player GetStatTopRanked()
+        public static Player GetTopRanked()
         {
             return Dbh.GetCollection<Player>("Players")
                     .FindAll()
@@ -46,7 +44,7 @@
                     .FirstOrDefault();
         }
 
-        public static Player GetStatBottomRanked()
+        public static Player GetBottomRanked()
         {
             return Dbh.GetCollection<Player>("Players")
                     .FindAll()
@@ -54,12 +52,12 @@
                     .FirstOrDefault();
         }
 
-        public static Player GetStatHighestRatingEver(List<Player> players)
+        public static Player GetHighestRatingEver(List<Player> players)
         {
             return players.OrderByDescending(m => m.Rating).FirstOrDefault();
         }
 
-        public static Player GetStatLowestRatingEver(List<Player> players)
+        public static Player GetLowestRatingEver(List<Player> players)
         {
             return players.OrderBy(m => m.Rating).FirstOrDefault();
         }

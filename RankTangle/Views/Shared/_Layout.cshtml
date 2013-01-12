@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="robots" content="noindex">
-    <link rel="shortcut icon" href="/Content/images/favicon.ico" type="image/x-icon" />
+    @*<link rel="shortcut icon" href="@Url.Content("/Content/images/favicon.ico")" type="image/x-icon" />*@
 
     <title>
         @if (ViewBag.Settings.Environment.ToString() != "Production")
@@ -21,12 +21,12 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
     <script type="text/javascript">
         if (typeof jQuery == 'undefined') {
-            document.write(unescape('%3Cscript src="@Url.Content("~/Javascript/jquery.min.js")" type="text/javascript"%3E%3C/script%3E'));
+            document.write(unescape('%3Cscript src="@Url.Content("~/Javascript/thirdparty/jquery.min.js")" type="text/javascript"%3E%3C/script%3E'));
         }
     </script>
     
     <!-- Feedback plugin -->
-    <script type="text/javascript">
+    @*<script type="text/javascript">
         if (!!window.innerWidth === true && window.innerWidth > 930) {
             var uvOptions = {};
             (function () {
@@ -35,7 +35,7 @@
                 var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
             })();
         }
-    </script>
+    </script>*@
 
 </head>
 <body>
@@ -79,7 +79,7 @@
         </footer>
     </div>
     <!-- Deferred Javascript -->
-    <script src="@Url.Content("~/Javascript/RankTangle.js")"></script>
+    <script src="@Url.Content("~/Javascript/Base.js")"></script>
     @RenderSection("Javascript", false)
     @MiniProfiler.RenderIncludes()    
 </body>

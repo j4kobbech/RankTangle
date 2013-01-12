@@ -1,0 +1,70 @@
+@import "_mixins.scss";
+
+.list-of-matches{
+    font-size: .9em;
+    line-height: 1.0em;
+}
+table {
+    thead {
+        border-color: $darkest;
+        border-bottom: 2px solid $dark;
+    }
+    tbody tr:nth-child(even) {
+        background-color: $light;
+    }
+    th,td {
+        &.team-names, &.nicknames, &.score { text-align: left;}
+        &.rating, &.played, &.created { text-align: right;}
+        &.rating {padding-right: 10px;}
+    }
+    td {
+        color: $font-color-grey;
+        font-weight: normal;
+        &.score, &.played, &.created { white-space: nowrap;}
+    }
+    th {
+        &.team-a { color: $team-a-color; }
+        &.team-b { color: $team-b-color; }
+    }
+    .winner {
+        color: $dark;
+        font-weight: bold;
+    }
+}
+
+#pending-matches {
+    .names, .odds, .created { display: none;}
+    .delete, .resolve {
+        div {
+            width: 15px;
+            margin: 0 auto;
+        }
+    }
+}
+
+#legendary-matches {
+    .names, .created, .long-time { display: none;}
+    .short-time, .long-time { float: right;}
+}
+
+/* @MediaQuery: iPad / Tablet */
+@media only screen and (min-width : 750px) {
+    table {
+        thead {
+            border-color: $darkest;
+            border-bottom: 2px solid $dark;
+        }
+    }
+    .list-of-matches{
+        line-height: 1.0em;
+    }
+    #pending-matches {
+        .nicknames { display: none;}
+        .names, .created { display: table-cell;}
+    }
+    #legendary-matches {
+        .nicknames, .short-time { display: none; }
+        .names, .created, .long-time { display: table-cell; }
+    }
+}
+

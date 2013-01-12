@@ -4,7 +4,7 @@
     var currentUser = (Player)HttpContext.Current.Session["User"];
 }
 @section Javascript{ <script async src="@Url.Content("~/Javascript/Matches.js")"></script> }
-@section Css{ <link rel="stylesheet" href="/Css/Matches.css"/>}
+@section Css{ <link rel="stylesheet" href="@Url.Content("~/Css/Matches.css")"/>}
 
 @if (currentUser != null)
 {

@@ -1,4 +1,5 @@
-﻿@model PlayerBaseDataViewModel
+﻿@using System.Text.RegularExpressions
+@model PlayerBaseDataViewModel
 @Html.HiddenFor(m => m.Player.Id)
 
 <a href="http://www.gravatar.com"><img id="profile-gravatar" alt="Gravatar picture" src="@Html.GetGravatarEmailHash(Model.Player.Email)"/></a>
@@ -13,10 +14,10 @@
 
 @Html.LabelFor(m => Model.Player.Email, "Email")
 <br/>
-@Html.TextBoxFor(m => m.Player.Email, new { @id= "Email", placeholder = "Email", autocapitalize = "off", autocorrect = "off", @class = Model.Settings.EnableDomainValidation ? "short" : "long"})
+@Html.TextBoxFor(m => m.Player.Email, new { placeholder = "Email", autocapitalize = "off", autocorrect = "off", @class = Model.Settings.EnableDomainValidation ? "short" : "long"})
 @if (Model.Settings.EnableDomainValidation)
 {
-    <string>@@</string>@Model.Settings.Domain
+    <span>@@</span>@Model.Settings.Domain
 }
 <br/><br/> 
 @Html.LabelFor(m => Model.Player.Name)

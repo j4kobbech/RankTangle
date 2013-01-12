@@ -5,7 +5,7 @@
 }
 
 @section Javascript { <script async src="@Url.Content("~/Javascript/LogOn.js")"></script> }
-@section Css{ <link rel="stylesheet" href="/Css/Account.css"/>}
+@section Css{ <link rel="stylesheet" href="@Url.Content("~/Css/Account.css")"/>}
 
 <h3>Log On</h3>
 
@@ -17,7 +17,7 @@
             @Html.TextBoxFor(m => m.Email, new { placeholder = "Email", @class = Model.Settings.EnableDomainValidation ? "short" : "long" })
             @if (Model.Settings.EnableDomainValidation)
             {
-                <text>@@trustpilot.com</text>
+                <text>@@</text>@Model.Settings.Domain
             }
         </div>
         <br>

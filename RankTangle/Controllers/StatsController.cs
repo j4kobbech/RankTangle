@@ -22,38 +22,43 @@
 
         public ActionResult Index()
         {
-            var viewModel = new StatsAggregateViewModel
-                                {
-                                    MostFights = StatsControllerHelpers.GetStatMostFights(),
-                                    MostWins = StatsControllerHelpers.GetStatMostWins(),
-                                    MostLosses = StatsControllerHelpers.GetStatMostLosses(),
-                                    TopRanked = StatsControllerHelpers.GetStatTopRanked(),
-                                    BottomRanked = StatsControllerHelpers.GetStatBottomRanked()
-                                };
-
             var matches = Dbh.GetCollection<Match>("Matches").FindAll();
             var matchesList = matches.SetSortOrder(SortBy.Ascending("GameOverTime")).ToList();
             var players = matches.Select(m => m.TeamBPlayer1).ToList();
-            players.AddRange(matches.Select(m => m.TeamBPlayer2).ToList());
-            players.AddRange(matches.Select(m => m.TeamAPlayer1).ToList());
-            players.AddRange(matches.Select(m => m.TeamAPlayer2).ToList());
+            var viewModel = new StatsAggregateViewModel { MatchCount = matchesList.Count() };
 
-            viewModel.HighestRatingEver = StatsControllerHelpers.GetStatHighestRatingEver(players);
-            viewModel.LowestRatingEver = StatsControllerHelpers.GetStatLowestRatingEver(players);
-
-            var winningStreak = StatsControllerHelpers.GetLongestWinningStreak(matchesList);
-            winningStreak.Player = DbHelper.GetPlayer(winningStreak.Player.Id);
-            viewModel.LongestWinningStreak = winningStreak;
-
-            var losingStreak = StatsControllerHelpers.GetLongestLosingStreak(matchesList);
-            losingStreak.Player = DbHelper.GetPlayer(losingStreak.Player.Id);
-            viewModel.LongestLosingStreak = losingStreak;
-
-            using (Profiler.Step("Calculating BiggestRatingWin"))
+            if (matchesList.Any())
             {
-                viewModel.BiggestRatingWin = StatsControllerHelpers.GetBiggestRatingWin();
-            }
+                viewModel = new StatsAggregateViewModel
+                                    {
+                                        MostFights = StatsControllerHelpers.GetMostFights(),
+                                        MostWins = StatsControllerHelpers.GetMostWins(),
+                                        MostLosses = StatsControllerHelpers.GetMostLosses(),
+                                        TopRanked = StatsControllerHelpers.GetTopRanked(),
+                                        BottomRanked = StatsControllerHelpers.GetBottomRanked()
+                                    };
 
+                players.AddRange(matches.Select(m => m.TeamBPlayer2).ToList());
+                players.AddRange(matches.Select(m => m.TeamAPlayer1).ToList());
+                players.AddRange(matches.Select(m => m.TeamAPlayer2).ToList());
+
+                viewModel.MatchCount = matches.Count();
+                viewModel.HighestRatingEver = StatsControllerHelpers.GetHighestRatingEver(players);
+                viewModel.LowestRatingEver = StatsControllerHelpers.GetLowestRatingEver(players);
+
+                var winningStreak = StatsControllerHelpers.GetLongestWinningStreak(matchesList);
+                winningStreak.Player = DbHelper.GetPlayer(winningStreak.Player.Id);
+                viewModel.LongestWinningStreak = winningStreak;
+
+                var losingStreak = StatsControllerHelpers.GetLongestLosingStreak(matchesList);
+                losingStreak.Player = DbHelper.GetPlayer(losingStreak.Player.Id);
+                viewModel.LongestLosingStreak = losingStreak;
+
+                using (Profiler.Step("Calculating BiggestRatingWin"))
+                {
+                    viewModel.BiggestRatingWin = StatsControllerHelpers.GetBiggestRatingWin();
+                }
+            }
             return this.View(viewModel);
         }
 

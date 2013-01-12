@@ -3,73 +3,81 @@
     ViewBag.Title = "Stats";
 }
 @section Javascript { <script async src="@Url.Content("~/Javascript/Stats.js")"></script> }
-@section Css{ <link rel="stylesheet" href="/Css/Stats.css"/>}
+@section Css{ <link rel="stylesheet" href="@Url.Content("~/Css/Stats.css")"/>}
 
 <fieldset class="statistics">
     <legend>Stats for all players</legend>
 
-    <div class="label">Most Fights:</div>
+    <div class="label">Matches played:</div>
     <div>
-        <a href="@Url.Action("Player", "Stats", new { playerId = Model.MostFights.Id})">@Model.MostFights.Name</a> (@Model.MostFights.Played)
+        @Model.MatchCount.ToString()
     </div>
+    
+    @if (Model.MatchCount > 0)
+    {
+        <div class="label">Most Fights:</div>
+        <div>
+            <a href="@Url.Action("Player", "Stats", new { playerId = Model.MostFights.Id })">@Model.MostFights.Name</a> (@Model.MostFights.Played)
+        </div>
 
-    <div class="label">Most Wins:</div>
-    <div>
-        <a href="@Url.Action("Player", "Stats", new { playerId = Model.MostWins.Id})">@Model.MostWins.Name</a> (@Model.MostWins.Won)
-    </div>
+        <div class="label">Most Wins:</div>
+        <div>
+            <a href="@Url.Action("Player", "Stats", new { playerId = Model.MostWins.Id })">@Model.MostWins.Name</a> (@Model.MostWins.Won)
+        </div>
 
-    <div class="label">Most Losses:</div>
-    <div>
-        <a href="@Url.Action("Player", "Stats", new { playerId = Model.MostLosses.Id})">@Model.MostLosses.Name</a> (@Model.MostLosses.Lost)
-    </div>
-    <br/>
+        <div class="label">Most Losses:</div>
+        <div>
+            <a href="@Url.Action("Player", "Stats", new { playerId = Model.MostLosses.Id })">@Model.MostLosses.Name</a> (@Model.MostLosses.Lost)
+        </div>
+        <br/>
 
-    <div class="label">Top Ranked:</div>
-    <div>
-        <a href="@Url.Action("Player", "Stats", new { playerId = Model.TopRanked.Id})">@Model.TopRanked.Name</a>
-    </div>
+        <div class="label">Top Ranked:</div>
+        <div>
+            <a href="@Url.Action("Player", "Stats", new { playerId = Model.TopRanked.Id })">@Model.TopRanked.Name</a>
+        </div>
 
-    <div class="label">Bottom Ranked:</div>
-    <div>
-        <a href="@Url.Action("Player", "Stats", new { playerId = Model.BottomRanked.Id})">@Model.BottomRanked.Name</a>
-    </div>
-    <br/>
+        <div class="label">Bottom Ranked:</div>
+        <div>
+            <a href="@Url.Action("Player", "Stats", new { playerId = Model.BottomRanked.Id })">@Model.BottomRanked.Name</a>
+        </div>
+        <br/>
 
-    <div class="label">Highest Rating Ever:</div>
-    <div>
-        <a href="@Url.Action("Player", "Stats", new { playerId = Model.HighestRatingEver.Id})">@Model.HighestRatingEver.Name</a> <span class="thin">with</span> @Model.HighestRatingEver.Rating.ToString("F2") <span class="thin">rating points</span>
-    </div>
+        <div class="label">Highest Rating Ever:</div>
+        <div>
+            <a href="@Url.Action("Player", "Stats", new { playerId = Model.HighestRatingEver.Id })">@Model.HighestRatingEver.Name</a> <span class="thin">with</span> @Model.HighestRatingEver.Rating.ToString("F2") <span class="thin">rating points</span>
+        </div>
 
-    <div class="label">Lowest Rating Ever:</div>
-    <div>
-        <a href="@Url.Action("Player", "Stats", new { playerId = Model.LowestRatingEver.Id})">@Model.LowestRatingEver.Name</a> <span class="thin">with</span> @Model.LowestRatingEver.Rating.ToString("F2") <span class="thin">rating points</span>
-    </div>
-    <br/>
+        <div class="label">Lowest Rating Ever:</div>
+        <div>
+            <a href="@Url.Action("Player", "Stats", new { playerId = Model.LowestRatingEver.Id })">@Model.LowestRatingEver.Name</a> <span class="thin">with</span> @Model.LowestRatingEver.Rating.ToString("F2") <span class="thin">rating points</span>
+        </div>
+        <br/>
 
-    <div class="label">Longest Winning streak:</div>
-    <div>
-        <a href="@Url.Action("Player", "Stats", new { playerId = Model.LongestWinningStreak.Player.Id})">@Model.LongestWinningStreak.Player.Name</a> <span class="thin">won</span> @Model.LongestWinningStreak.Count <span class="thin">fights in a row</span>
-    </div>
+        <div class="label">Longest Winning streak:</div>
+        <div>
+            <a href="@Url.Action("Player", "Stats", new { playerId = Model.LongestWinningStreak.Player.Id })">@Model.LongestWinningStreak.Player.Name</a> <span class="thin">won</span> @Model.LongestWinningStreak.Count <span class="thin">fights in a row</span>
+        </div>
 
-    <div class="label">Longest Losing streak:</div>
-    <div>
-        <a href="@Url.Action("Player", "Stats", new { playerId = Model.LongestLosingStreak.Player.Id})">@Model.LongestLosingStreak.Player.Name</a> <span class="thin">lost</span> @Model.LongestLosingStreak.Count <span class="thin">fights in a row</span>
-    </div>
-    <br/>
+        <div class="label">Longest Losing streak:</div>
+        <div>
+            <a href="@Url.Action("Player", "Stats", new { playerId = Model.LongestLosingStreak.Player.Id })">@Model.LongestLosingStreak.Player.Name</a> <span class="thin">lost</span> @Model.LongestLosingStreak.Count <span class="thin">fights in a row</span>
+        </div>
+        <br/>
 
-    <div class="label">Biggest Win:</div>
-    <div>
-        <a href="@Url.Action("Player", "Stats", new { playerId = Model.BiggestRatingWin.Match.GetWinners()[0].Id})">@Model.BiggestRatingWin.Match.GetWinners()[0].Name</a>
-        @if (Model.BiggestRatingWin.Match.GetWinners().Count == 2)
-        {
-            <text> <span class="thin">&</span> <a href="@Url.Action("Player", "Stats", new { playerId = Model.BiggestRatingWin.Match.GetWinners()[1].Id})">@Model.BiggestRatingWin.Match.GetWinners()[1].Name</a></text>
-        }
+        <div class="label">Biggest Win:</div>
+        <div>
+            <a href="@Url.Action("Player", "Stats", new { playerId = Model.BiggestRatingWin.Match.GetWinners()[0].Id })">@Model.BiggestRatingWin.Match.GetWinners()[0].Name</a>
+            @if (Model.BiggestRatingWin.Match.GetWinners().Count == 2)
+            {
+                <text> <span class="thin">&</span> <a href="@Url.Action("Player", "Stats", new { playerId = Model.BiggestRatingWin.Match.GetWinners()[1].Id })">@Model.BiggestRatingWin.Match.GetWinners()[1].Name</a></text>
+            }
         
-        <span class="thin">beat up</span> <a href="@Url.Action("Player", "Stats", new { playerId = Model.BiggestRatingWin.Match.GetLosers()[0].Id})">@Model.BiggestRatingWin.Match.GetLosers()[0].Name</a>
-        @if (Model.BiggestRatingWin.Match.GetLosers().Count == 2)
-        {
-            <text> <span class="thin">&</span> <a href="@Url.Action("Player", "Stats", new { playerId = Model.BiggestRatingWin.Match.GetLosers()[1].Id})">@Model.BiggestRatingWin.Match.GetLosers()[1].Name</a></text>
-        }
-        <span class="thin">and gained</span> @Model.BiggestRatingWin.Rating.ToString("F2") <span class="thin">rating points.</span>
-    </div>
+            <span class="thin">beat up</span> <a href="@Url.Action("Player", "Stats", new { playerId = Model.BiggestRatingWin.Match.GetLosers()[0].Id })">@Model.BiggestRatingWin.Match.GetLosers()[0].Name</a>
+            @if (Model.BiggestRatingWin.Match.GetLosers().Count == 2)
+            {
+                <text> <span class="thin">&</span> <a href="@Url.Action("Player", "Stats", new { playerId = Model.BiggestRatingWin.Match.GetLosers()[1].Id })">@Model.BiggestRatingWin.Match.GetLosers()[1].Name</a></text>
+            }
+            <span class="thin">and gained</span> @Model.BiggestRatingWin.Rating.ToString("F2") <span class="thin">rating points.</span>
+        </div>
+    }
 </fieldset>

@@ -1,0 +1,35 @@
+// Variable declarations
+$light: #ddd;
+$dark: #222;
+$darkest: #000;
+$font-color-grey: #555;
+$font-color-dimmed: #999;
+$team-a-color: #C00;
+$team-b-color: #00A;
+$std-border: 2px solid #6A6;
+
+// mixin declarations
+@mixin round-border-small {
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+@mixin round-border-medium {
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+@mixin round-border-large {
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+}
+@mixin std-round-border {
+    border: 2px solid $font-color-dimmed;
+    @include round-border-small;
+}
+@mixin gravatar-large {
+    border: 4px solid $light;
+    height: 80px;
+    margin: 4px;
+}

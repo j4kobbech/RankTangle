@@ -1,0 +1,76 @@
+.list-of-matches {
+  font-size: .9em;
+  line-height: 1.0em; }
+
+table thead {
+  border-color: black;
+  border-bottom: 2px solid #222222; }
+table tbody tr:nth-child(even) {
+  background-color: #dddddd; }
+table th.team-names, table th.nicknames, table th.score, table td.team-names, table td.nicknames, table td.score {
+  text-align: left; }
+table th.rating, table th.played, table th.created, table td.rating, table td.played, table td.created {
+  text-align: right; }
+table th.rating, table td.rating {
+  padding-right: 10px; }
+table td {
+  color: #555555;
+  font-weight: normal; }
+  table td.score, table td.played, table td.created {
+    white-space: nowrap; }
+table th.team-a {
+  color: #cc0000; }
+table th.team-b {
+  color: #0000aa; }
+table .winner {
+  color: #222222;
+  font-weight: bold; }
+
+#pending-matches .names, #pending-matches .odds, #pending-matches .created {
+  display: none; }
+#pending-matches .delete div, #pending-matches .resolve div {
+  width: 15px;
+  margin: 0 auto; }
+
+#legendary-matches .names, #legendary-matches .created, #legendary-matches .long-time {
+  display: none; }
+#legendary-matches .short-time, #legendary-matches .long-time {
+  float: right; }
+
+/* @MediaQuery: iPad / Tablet */
+@media only screen and (min-width: 750px) {
+  table thead {
+    border-color: black;
+    border-bottom: 2px solid #222222; }
+
+  .list-of-matches {
+    line-height: 1.0em; }
+
+  #pending-matches .nicknames {
+    display: none; }
+  #pending-matches .names, #pending-matches .created {
+    display: table-cell; }
+
+  #legendary-matches .nicknames, #legendary-matches .short-time {
+    display: none; }
+  #legendary-matches .names, #legendary-matches .created, #legendary-matches .long-time {
+    display: table-cell; } }
+/* Stats View
+----------------------------------------------------------*/
+.statistics div {
+  font-weight: bold;
+  font-size: 1.0em; }
+.statistics .first, .statistics .second {
+  width: 230px;
+  float: left; }
+.statistics .label {
+  font-weight: normal;
+  font-size: .85em; }
+
+.names sup, .nicknames sup {
+  font-weight: normal;
+  margin-left: 3px; }
+
+.thin {
+  font-weight: normal; }
+

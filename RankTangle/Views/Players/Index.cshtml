@@ -3,7 +3,7 @@
     ViewBag.Title = "Scoreboard";
 }
 @section Javascript{ <script async src="@Url.Content("~/Javascript/Players.js")"></script> }
-@section Css{ <link rel="stylesheet" href="/Css/Players.css"/>}
+@section Css{ <link rel="stylesheet" href="@Url.Content("~/Css/Players.css")"/>}
 
 @if (Model.AllPlayers.Any()) 
 {
@@ -29,5 +29,5 @@
     }
 } else
 {
-    <text>- nope! noone here ... - </text>
+    <text>No players have signed up yet - hurry up, be the first one!</text>
 }

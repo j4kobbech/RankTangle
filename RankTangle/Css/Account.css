@@ -1,0 +1,10 @@
+label {
+  display: block; }
+  label[for="RememberMe"] {
+    display: inline; }
+
+#profile-gravatar {
+  border: 4px solid #dddddd;
+  height: 80px;
+  margin: 4px; }
+

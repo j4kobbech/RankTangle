@@ -2,20 +2,19 @@
 {
     using System.Linq;
     using System.Web.Mvc;
-
+    using MongoDB.Bson;
+    using MongoDB.Driver.Builders;
     using RankTangle.Main;
     using RankTangle.Models.Base;
     using RankTangle.Models.Domain;
     using RankTangle.Models.ViewModels;
-
-    using MongoDB.Bson;
-    using MongoDB.Driver.Builders;
-
+    
     public class AdminController : BaseController
     {
         public ActionResult Index()
         {
             var currentUser = (Player)Session["User"];
+            var config = Dbh.GetCollection<Config>("Config").FindOne();
 
             if (currentUser != null && currentUser.Email == this.Settings.AdminAccount)
             {
@@ -26,7 +25,7 @@
                         .Select(team => new SelectListItem { Selected = false, Text = team.Name, Value = team.Id })
                         .ToList();
 
-                return View(new ConfigViewModel { Settings = this.Settings, Users = playerCollection });
+                return View(new ConfigViewModel { Settings = config, Users = playerCollection });
             }
 
             return this.Redirect("/Home/Index");
@@ -59,7 +58,9 @@
             if (ModelState.IsValid)
             {
                 var configCollection = Dbh.GetCollection<Config>("Config");
+                var dbConfig = configCollection.FindOne();
 
+                this.Settings.Id = dbConfig.Id;
                 this.Settings.Name = viewModel.Settings.Name;
                 this.Settings.Domain = viewModel.Settings.Domain;
                 this.Settings.AdminAccount = viewModel.Settings.AdminAccount;

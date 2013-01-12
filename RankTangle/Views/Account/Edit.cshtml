@@ -3,7 +3,7 @@
     ViewBag.Title = "Account info";
 }
 @section Javascript{ <script async src="@Url.Content("~/Javascript/Register.js")"></script> }
-@section Css{ <link rel="stylesheet" href="/Css/Players.css"/>}
+@section Css{ <link rel="stylesheet" href="@Url.Content("~/Css/Players.css")"/>}
 
 @using (Html.BeginForm("Edit", "Account", FormMethod.Post, new { id = "edit-player" }))
 {

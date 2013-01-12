@@ -1,0 +1,29 @@
+// Import mixins
+@import "_mixins";
+@import "_match-tables";
+
+/* Stats View
+----------------------------------------------------------*/
+.statistics {
+    div {
+        font-weight: bold;
+        font-size: 1.0em;
+    }
+    .first, .second {
+        width: 230px;
+        float: left;
+    }
+    .label {
+        font-weight: normal;
+        font-size: .85em;
+    }
+}
+
+.names sup, .nicknames sup {
+    font-weight: normal;
+    margin-left: 3px;
+}
+
+.thin {
+    font-weight: normal;
+}

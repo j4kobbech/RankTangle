@@ -1,0 +1,13 @@
+// Import mixins
+@import "_mixins";
+
+label { 
+    display: block; 
+    &[for="RememberMe"] {
+        display: inline;
+    }
+}
+
+#profile-gravatar {
+    @include gravatar-large
+}

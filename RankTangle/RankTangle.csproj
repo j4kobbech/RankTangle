@@ -14,7 +14,7 @@
     <RootNamespace>RankTangle</RootNamespace>
     <AssemblyName>RankTangle</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <MvcBuildViews>false</MvcBuildViews>
+    <MvcBuildViews>true</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -156,12 +156,58 @@
     <Compile Include="Models\ViewModels\PlayersViewModel.cs" />
     <Compile Include="Models\ViewModels\StatsAggregateViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewHelpers\Md5Extensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="Content\images\ajax-loader.gif" />
+    <Content Include="Content\images\arrows-down.png" />
+    <Content Include="Content\images\arrows-down_12x12.png" />
+    <Content Include="Content\images\checkmark_15x15.png" />
+    <Content Include="Content\images\checkmark_15x15_grayscale.png" />
+    <Content Include="Content\images\checkmark_32x32.png" />
+    <Content Include="Content\images\delete_15x15.png" />
+    <Content Include="Content\images\delete_15x15_grayscale.png" />
+    <Content Include="Content\images\delete_32x32.png" />
+    <Content Include="Content\images\delete_button_100x99.png" />
+    <Content Include="Content\images\delete_button_15x15.png" />
+    <Content Include="Content\images\edit_32x32.png" />
+    <Content Include="Content\images\edit_35x32.png" />
+    <Content Include="Content\images\menu-list.png" />
+    <Content Include="Content\images\trash-can_18x25.png" />
+    <Content Include="Content\images\trash-can_50x50.png" />
+    <Content Include="Css\Account.css">
+      <DependentUpon>Account.scss</DependentUpon>
+    </Content>
+    <Content Include="Css\Admin.css" />
+    <Content Include="Css\Base.css">
+      <DependentUpon>Base.scss</DependentUpon>
+    </Content>
+    <Content Include="Css\Home.css" />
+    <Content Include="Css\Matches.css">
+      <DependentUpon>Matches.scss</DependentUpon>
+    </Content>
+    <Content Include="Css\Players.css">
+      <DependentUpon>Players.scss</DependentUpon>
+    </Content>
+    <Content Include="Css\Stats.css">
+      <DependentUpon>Stats.scss</DependentUpon>
+    </Content>
     <Content Include="Global.asax" />
+    <Content Include="Javascript\Admin.js" />
+    <Content Include="Javascript\Base.js" />
+    <Content Include="Javascript\Home.js" />
+    <Content Include="Javascript\LogOn.js" />
+    <Content Include="Javascript\Matches.js" />
+    <Content Include="Javascript\Players.js" />
+    <Content Include="Javascript\PlayerStats.js" />
+    <Content Include="Javascript\Register.js" />
+    <Content Include="Javascript\Stats.js" />
+    <Content Include="Javascript\thirdparty\angular.min.js" />
+    <Content Include="Javascript\thirdparty\highcharts.js" />
+    <Content Include="Javascript\thirdparty\jquery.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -196,6 +242,17 @@
     <Content Include="Views\Stats\Index.cshtml" />
     <Content Include="Views\Stats\Player.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Css\Account.scss" />
+    <Content Include="Css\Admin.scss" />
+    <Content Include="Css\Base.scss" />
+    <Content Include="Css\Home.scss" />
+    <Content Include="Css\Matches.scss" />
+    <Content Include="Css\Players.scss" />
+    <Content Include="Css\Stats.scss" />
+    <Content Include="Css\_match-tables.scss" />
+    <Content Include="Css\_mixins.scss" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
