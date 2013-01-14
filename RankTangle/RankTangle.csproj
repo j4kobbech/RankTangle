@@ -146,6 +146,7 @@
     <Compile Include="Models\Domain\Event.cs" />
     <Compile Include="Models\Domain\Match.cs" />
     <Compile Include="Models\Domain\Player.cs" />
+    <Compile Include="Models\Domain\Ratings.cs" />
     <Compile Include="Models\Domain\Team.cs" />
     <Compile Include="Models\ViewModels\ConfigViewModel.cs" />
     <Compile Include="Models\ViewModels\ExistsResponse.cs" />

@@ -1,16 +1,16 @@
 ﻿namespace RankTangle.Models.Domain
 {
     using System;
-    using RankTangle.Models.Base;
-    using MongoDB.Bson; 
+    using MongoDB.Bson;
     using MongoDB.Bson.Serialization.Attributes;
+    using RankTangle.Models.Base;
 
     [BsonIgnoreExtraElements]
     public class Player : MongoDocument
     {
         public Player()
         {
-            Rating = 1000;
+            Ratings = new Ratings();
             Deactivated = false;
             RememberMe = true;
             Won = 0;
@@ -22,7 +22,7 @@
         public Player(string id)
         {
             Id = id;
-            Rating = 1000;
+            Ratings = new Ratings();
             Deactivated = false;
             RememberMe = true;
             Won = 0;
@@ -47,7 +47,7 @@
         
         public int Played { get; set; }
 
-        public double Rating { get; set; }
+        public Ratings Ratings { get; set; }
 
         public bool Deactivated { get; set; }
         
