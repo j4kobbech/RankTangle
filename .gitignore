@@ -1,0 +1,7 @@
+bin/
+obj/
+_ReSharper.FoosBall/
+FoosBall/Migration/*.json
+*.cache
+*.suo
+*.orig
