@@ -1,9 +1,10 @@
 ﻿namespace RankTangle.Models.ViewModels
 {
+    using RankTangle.Models.Base;
     using RankTangle.Models.Custom;
     using RankTangle.Models.Domain;
 
-    public class StatsAggregateViewModel
+    public class StatsAggregateViewModel : BaseViewModel
     {
         public long MatchCount { get; set; }
 

@@ -1,7 +1,8 @@
 bin/
 obj/
-_ReSharper.FoosBall/
-FoosBall/Migration/*.json
+_ReSharper.RankTangle/
+RankTangle/Migration/*.json
+RankTangle.Tests/
 *.cache
 *.suo
 *.orig

@@ -2,57 +2,47 @@
 @using (Html.BeginForm("RegisterMatch", "Matches", FormMethod.Post))
 {   
     <input type="button" class="button" id="open-submit-match-form" value="Create a Match" />
-    <input type="hidden" id="gender-specific-matches" value="@Model.Settings.EnableGenderSpecificMatches.ToString()" />
-    
+    @Html.HiddenFor(x => x.Settings.MinTeamNumberOfTeamMembers)
+        
     <fieldset id="submit-match-form" class="closed">
         <legend>Match Result</legend>
         
         <div id="team-a-players" class="team">
-            <div class="team-name">Team A</div>
-            <div class="form-input">
-                <select class="select-player" id="team-a-player-1" name="team-a-player-1">
-                    <option></option>
-                    @foreach (var player in Model.SelectPlayers)
-                    {
-                        <option class="@player.CssClass" value="@player.Value">@player.Text</option>
-                    }
-                </select>
-            </div>
-            <br />
-            <div class="form-input">
-                <select class="select-player" id="team-a-player-2" name="team-a-player-2">
-                    <option></option>
-                    @foreach (var player in Model.SelectPlayers)
-                    {
-                        <option class="@player.CssClass" value="@player.Value">@player.Text</option>
-                    }
-                </select>
-            </div>
+            <div class="team-name">@Model.Settings.TeamALabel</div>
+
+            @for (var i = 0; i < Model.Settings.MaxTeamNumberOfTeamMembers; i++)
+            {
+                <div class="form-input">
+                    <select class="select-player" id="team-a-player-@(i)" name="team-a-player-@(i)">
+                        <option></option>
+                        @foreach (var player in Model.SelectPlayers)
+                        {
+                            <option class="@player.CssClass" value="@player.Value">@player.Text</option>
+                        }
+                    </select>
+
+                </div>
+                <br />
+            }
         </div>
 
         <div class="vs">VS</div>
 
         <div id="team-b-players" class="team">
-            <div class="team-name">Team B</div>
-            <div class="form-input">
-                <select class="select-player" id="team-b-player-1" name="team-b-player-1">
-                    <option></option>
-                    @foreach (var player in Model.SelectPlayers)
-                    {
-                        <option class="@player.CssClass" value="@player.Value">@player.Text</option>
-                    }
-                </select>
-            </div>
-            <br />
-            <div class="form-input">
-                <select class="select-player" id="team-b-player-2" name="team-b-player-2">
-                    <option></option>
-                    @foreach (var player in Model.SelectPlayers)
-                    {
-                        <option class="@player.CssClass" value="@player.Value">@player.Text</option>
-                    }
-                </select>
-            </div>
+            <div class="team-name">@Model.Settings.TeamBLabel</div>
+            @for (var i = 0; i < Model.Settings.MaxTeamNumberOfTeamMembers; i++)
+            {
+                <div class="form-input">
+                    <select class="select-player" id="team-b-player-@(i)" name="team-b-player-@(i)">
+                        <option></option>
+                        @foreach (var player in Model.SelectPlayers)
+                        {
+                            <option class="@player.CssClass" value="@player.Value">@player.Text</option>
+                        }
+                    </select>
+                </div>
+                <br />
+            }
         </div>
         
         <div class="team-scores">

@@ -213,7 +213,7 @@ textarea {
     min-height: 75px;
 }
 
-/* --- FoosBall --- v v v
+/* --- RankTangle --- 
 /* ---------------------------------------------------------*/
 header, footer, nav, section {
     display: block;
@@ -352,7 +352,7 @@ input[type="text"], input[type="password"], input[type="email"] {
     padding: 2px;
     width: 98%;
 
-    &#Player_Email.short {
+    &.short {
         width: 120px!important;
     }
 }

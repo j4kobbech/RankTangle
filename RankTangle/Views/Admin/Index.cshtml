@@ -1,6 +1,6 @@
 @model ConfigViewModel
 @{
-    ViewBag.Title = "Configuration";
+    ViewBag.Title = "Administration";
 }
 
 @section Javascript
@@ -18,19 +18,25 @@
             @Html.LabelFor(m => m.Settings.Name, "Application name")
             @Html.TextBoxFor(m => m.Settings.Name)
             
+            @Html.LabelFor(m => m.Settings.TeamALabel, "Team A's Label")
+            @Html.TextBoxFor(m => m.Settings.TeamALabel)
+
+            @Html.LabelFor(m => m.Settings.TeamBLabel, "Team B's Label")
+            @Html.TextBoxFor(m => m.Settings.TeamBLabel)
+
             @Html.LabelFor(m => m.Settings.AdminAccount, "Administrator (email)")
             @Html.TextBoxFor(m => m.Settings.AdminAccount)
             
+            @Html.LabelFor(m => m.Settings.MinTeamNumberOfTeamMembers, "Min. players on a team")
+            @Html.TextBoxFor(m => m.Settings.MinTeamNumberOfTeamMembers)
+
+            @Html.LabelFor(m => m.Settings.MaxTeamNumberOfTeamMembers, "Max. players on a team")
+            @Html.TextBoxFor(m => m.Settings.MaxTeamNumberOfTeamMembers)
+
             @Html.LabelFor(m => m.Settings.EnableDomainValidation, "Enable domain validation?")
             @Html.CheckBoxFor(m => m.Settings.EnableDomainValidation)
             @Html.TextBoxFor(m => m.Settings.Domain)
 
-            @Html.LabelFor(m => m.Settings.EnableOneOnOneMatches, "Enable one-on-one matches?")
-            @Html.CheckBoxFor(m => m.Settings.EnableOneOnOneMatches)
-            
-            @Html.LabelFor(m => m.Settings.EnableGenderSpecificMatches, "Enable gender specific matches?")
-            @Html.CheckBoxFor(m => m.Settings.EnableGenderSpecificMatches)
-            
             <input name="save-config" type="submit" value="Save" class="button"/>
         }
     </fieldset>

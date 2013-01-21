@@ -1,6 +1,6 @@
 ﻿@model PlayersViewModel
 @{
-    ViewBag.Title = "Scoreboard";
+    ViewBag.Title = "Ladders";
 }
 @section Javascript{ <script async src="@Url.Content("~/Javascript/Players.js")"></script> }
 @section Css{ <link rel="stylesheet" href="@Url.Content("~/Css/Players.css")"/>}
@@ -20,7 +20,7 @@
             <div class="name ellipsis-1">
                 <a href="@Url.Action("Player","Stats", new {playerId = @player.Id })">@player.Name</a>
                 <br>
-                <span title="Elo rating: @player.Rating.ToString("F2")">@player.Rating.ToString("F0")<sup>points</sup></span>|
+                <span title="Elo rating: @player.Ratings.OverAll.ToString("F2")">@player.Ratings.OverAll.ToString("F0")<sup>points</sup></span>|
                 <span title="Winning ratio: @player.Ratio.ToString("F4")" class="ratio">@player.Ratio.ToString("F2")<sup>ratio</sup></span>
             </div>
         </div>

@@ -2,9 +2,10 @@
 {
     using System.Collections.Generic;
 
+    using RankTangle.Models.Base;
     using RankTangle.Models.Domain;
 
-    public class PlayerStatsViewModel
+    public class PlayerStatsViewModel : BaseViewModel
     {
         public Player Player { get; set; }
 
@@ -33,12 +34,6 @@
         public PreferredColor PreferredColor { get; set; }
 
         public WinningColor WinningColor { get; set; }
-
-        public int PlayedToday { get; set; }
-
-        public int PlayedLast7Days { get; set; }
-
-        public int PlayedLast30Days { get; set; }
 
         public Match LatestMatch { get; set; }
 

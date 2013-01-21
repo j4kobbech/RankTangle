@@ -64,11 +64,11 @@
             {
                 if (this.FinalStreaks[finalStreaksId] > this.AggregatedStreaks[aggrStreaksId])
                 {
-                    return new Streak { Player = new Player(finalStreaksId), Count = this.FinalStreaks[finalStreaksId] };
+                    return new Streak { Player = new Player(finalStreaksId), StreakCount = this.FinalStreaks[finalStreaksId] };
                 }
             }
 
-            return new Streak { Player = new Player(aggrStreaksId), Count = this.AggregatedStreaks[aggrStreaksId] };
+            return new Streak { Player = new Player(aggrStreaksId), StreakCount = this.AggregatedStreaks[aggrStreaksId] };
         }
     }
 }

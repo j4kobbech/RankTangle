@@ -8,12 +8,14 @@
     {
         public Config()
         {
-            this.Name = "RankTangle";
-            this.Domain = "gmail.com";
-            this.AdminAccount = "j4kobbech@gmail.com";
-            this.EnableDomainValidation = true;
-            this.EnableOneOnOneMatches = true;
-            this.EnableGenderSpecificMatches = false;
+            Name = "RankTangle";
+            Domain = "gmail.com";
+            AdminAccount = "j4kobbech@gmail.com";
+            EnableDomainValidation = true;
+            MinTeamNumberOfTeamMembers = 1;
+            MaxTeamNumberOfTeamMembers = 2;
+            TeamALabel = "Yellow Team";
+            TeamBLabel = "Brown Team";
         }
 
         public string Name { get; set; }
@@ -24,10 +26,14 @@
 
         public bool EnableDomainValidation { get; set; }
 
-        public bool EnableOneOnOneMatches { get; set; }
-
-        public bool EnableGenderSpecificMatches { get; set; }
+        public int MinTeamNumberOfTeamMembers { get; set; }
+ 
+        public int MaxTeamNumberOfTeamMembers { get; set; }
 
         public Environment Environment { get; set; }
+
+        public string TeamALabel { get; set; }
+
+        public string TeamBLabel { get; set; }
     }
 }

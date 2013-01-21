@@ -60,16 +60,18 @@
                 var configCollection = Dbh.GetCollection<Config>("Config");
                 var dbConfig = configCollection.FindOne();
 
-                this.Settings.Id = dbConfig.Id;
-                this.Settings.Name = viewModel.Settings.Name;
-                this.Settings.Domain = viewModel.Settings.Domain;
-                this.Settings.AdminAccount = viewModel.Settings.AdminAccount;
-                this.Settings.EnableDomainValidation = viewModel.Settings.EnableDomainValidation;
-                this.Settings.EnableOneOnOneMatches = viewModel.Settings.EnableOneOnOneMatches;
-                this.Settings.EnableGenderSpecificMatches = viewModel.Settings.EnableGenderSpecificMatches;
+                Settings.Id = dbConfig.Id;
+                Settings.Name = viewModel.Settings.Name;
+                Settings.TeamALabel = viewModel.Settings.TeamALabel;
+                Settings.TeamBLabel = viewModel.Settings.TeamBLabel;
+                Settings.Domain = viewModel.Settings.Domain;
+                Settings.AdminAccount = viewModel.Settings.AdminAccount;
+                Settings.EnableDomainValidation = viewModel.Settings.EnableDomainValidation;
+                Settings.MinTeamNumberOfTeamMembers = viewModel.Settings.MinTeamNumberOfTeamMembers;
+                Settings.MaxTeamNumberOfTeamMembers = viewModel.Settings.MaxTeamNumberOfTeamMembers;
 
                 configCollection.Save(this.Settings);
-            }
+            } 
             
             return RedirectToAction("Index", "Admin");
         }
@@ -109,15 +111,15 @@
 
             if (currentUser != null && currentUser.Email == this.Settings.AdminAccount)
             {
-                var allMatches = Dbh.GetCollection<Match>("Matches").FindAll().SetSortOrder(SortBy.Ascending("GameOverTime"));
+                var allMatches = Dbh.GetCollection<Match>("Matches").FindAll().SetSortOrder(SortBy.Ascending("GameOverTime")).ToList();
                 var allPlayers = Dbh.GetCollection<Player>("Players").FindAll();
 
-                var copyMatches = Dbh.GetCollection<Match>("CopyMatches");
-                var copyPlayers = Dbh.GetCollection<Player>("CopyPlayers");
+                var temporaryCopyOfMatches = Dbh.GetCollection<Match>("CopyMatches");
+                var temporaryCopyOfPlayers = Dbh.GetCollection<Player>("CopyPlayers");
 
                 // Empty the Copies
-                copyMatches.RemoveAll();
-                copyPlayers.RemoveAll();
+                temporaryCopyOfMatches.RemoveAll();
+                temporaryCopyOfPlayers.RemoveAll();
 
                 // Reset all Players
                 foreach (var player in allPlayers)
@@ -125,9 +127,9 @@
                     player.Lost = 0;
                     player.Won = 0;
                     player.Played = 0;
-                    player.Rating = 1000;
+                    player.Ratings = new Ratings();
 
-                    copyPlayers.Save(player);
+                    temporaryCopyOfPlayers.Save(player);
                 }
 
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -135,78 +137,32 @@
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////
                 foreach (var match in allMatches)
                 {
-                    // Update players from the match with players from the Db.
-                    match.TeamAPlayer1 = copyPlayers.FindOne(Query.EQ("_id", BsonObjectId.Parse(match.TeamAPlayer1.Id)));
+                    var replayedMatch = match;
                     
-                    if (match.CountTeamAPlayers() == 2)
-                    {
-                        match.TeamAPlayer2 = copyPlayers.FindOne(Query.EQ("_id", BsonObjectId.Parse(match.TeamAPlayer2.Id)));
-                    }
-
-                    match.TeamBPlayer1 = copyPlayers.FindOne(Query.EQ("_id", BsonObjectId.Parse(match.TeamBPlayer1.Id)));
-                
-                    if (match.CountTeamBPlayers() == 2)
-                    {
-                        match.TeamBPlayer2 = copyPlayers.FindOne(Query.EQ("_id", BsonObjectId.Parse(match.TeamBPlayer2.Id)));
-                    }
-
-                    // Determine the winners and the losers
-                    var winners = new Team();
-                    var losers = new Team();
-
-                    if (match.TeamAScore > match.TeamBScore)
-                    {
-                        winners.MatchTeam.Add(match.TeamAPlayer1);
-                        winners.MatchTeam.Add(match.TeamAPlayer2);
-                        losers.MatchTeam.Add(match.TeamBPlayer1);
-                        losers.MatchTeam.Add(match.TeamBPlayer2);
-                    }
-                    else
-                    {
-                        winners.MatchTeam.Add(match.TeamBPlayer1);
-                        winners.MatchTeam.Add(match.TeamBPlayer2);
-                        losers.MatchTeam.Add(match.TeamAPlayer1);
-                        losers.MatchTeam.Add(match.TeamAPlayer2);
-                    }
+                    // Update each player in the match with data from the database.
+                    replayedMatch.GetMatchPlayers().ForEach(x => x = temporaryCopyOfPlayers.FindOne(Query.EQ("_id", BsonObjectId.Parse(x.Id))));
 
                     // Get the rating modifier
-                    var ratingModifier = Rating.GetRatingModifier(winners.GetTeamRating(), losers.GetTeamRating());
-
-                    // Propagate the rating and stats to the team members of both teams
-                    foreach (var member in winners.MatchTeam.Where(member => member.Id != null))
-                    {
-                        member.Rating += ratingModifier;
-                        member.Won++;
-                        member.Played++;
-                        copyPlayers.Save(member);
-                    }
-
-                    foreach (var member in losers.MatchTeam.Where(member => member.Id != null))
-                    {
-                        member.Rating -= ratingModifier;
-                        member.Lost++;
-                        member.Played++;
-                        copyPlayers.Save(member);
-                    }
+                    Rating.ModifyMatchRatings(ref replayedMatch);
 
                     // Save the data to Db
-                    copyMatches.Save(match);
+                    temporaryCopyOfMatches.Save(replayedMatch);
                 }
 
                 // Copy data into Production tables
-                var matches = Dbh.GetCollection<Match>("Matches");
-                var players = Dbh.GetCollection<Match>("Players");
-                matches.RemoveAll();
-                players.RemoveAll();
+                var matchesCollection = Dbh.GetCollection<Match>("Matches");
+                var playersCollection = Dbh.GetCollection<Match>("Players");
+                matchesCollection.RemoveAll();
+                playersCollection.RemoveAll();
 
-                foreach (var player in copyPlayers.FindAll())
+                foreach (var player in temporaryCopyOfPlayers.FindAll())
                 {
-                    players.Save(player);
+                    playersCollection.Save(player);
                 }
 
-                foreach (var match in copyMatches.FindAll())
+                foreach (var match in temporaryCopyOfMatches.FindAll())
                 {
-                    matches.Save(match);
+                    matchesCollection.Save(match);
                 }
             }
 

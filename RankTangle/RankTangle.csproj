@@ -52,6 +52,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\mongocsharpdriver.1.6\lib\net35\MongoDB.Driver.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp">
+      <HintPath>..\packages\RestSharp.104.1\lib\net4\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -116,6 +119,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ControllerHelpers\MatchControllerHelpers.cs" />
     <Compile Include="ControllerHelpers\DbHelper.cs" />
     <Compile Include="ControllerHelpers\StatsControllerHelpers.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -130,7 +134,7 @@
     </Compile>
     <Compile Include="Main\AppConfig.cs" />
     <Compile Include="Main\Db.cs" />
-    <Compile Include="Main\Events.cs" />
+    <Compile Include="Main\Email.cs" />
     <Compile Include="Main\Md5.cs" />
     <Compile Include="Main\Rating.cs" />
     <Compile Include="Models\Base\BaseViewModel.cs" />
@@ -143,13 +147,14 @@
     <Compile Include="Models\Custom\Streaks.cs" />
     <Compile Include="Models\Domain\AutoLogin.cs" />
     <Compile Include="Models\Domain\Config.cs" />
-    <Compile Include="Models\Domain\Event.cs" />
+    <Compile Include="Models\Domain\Gender.cs" />
     <Compile Include="Models\Domain\Match.cs" />
+    <Compile Include="Models\Domain\MatchType.cs" />
     <Compile Include="Models\Domain\Player.cs" />
+    <Compile Include="Models\Domain\Ratings.cs" />
     <Compile Include="Models\Domain\Team.cs" />
     <Compile Include="Models\ViewModels\ConfigViewModel.cs" />
     <Compile Include="Models\ViewModels\ExistsResponse.cs" />
-    <Compile Include="Models\ViewModels\FeaturesViewModel.cs" />
     <Compile Include="Models\ViewModels\HomeViewModel.cs" />
     <Compile Include="Models\ViewModels\LogOnViewModel.cs" />
     <Compile Include="Models\ViewModels\MatchesViewModel.cs" />
@@ -184,11 +189,15 @@
     <Content Include="Css\Account.css">
       <DependentUpon>Account.scss</DependentUpon>
     </Content>
-    <Content Include="Css\Admin.css" />
+    <Content Include="Css\Admin.css">
+      <DependentUpon>Admin.scss</DependentUpon>
+    </Content>
     <Content Include="Css\Base.css">
       <DependentUpon>Base.scss</DependentUpon>
     </Content>
-    <Content Include="Css\Home.css" />
+    <Content Include="Css\Home.css">
+      <DependentUpon>Home.scss</DependentUpon>
+    </Content>
     <Content Include="Css\Matches.css">
       <DependentUpon>Matches.scss</DependentUpon>
     </Content>
@@ -231,7 +240,6 @@
     <Content Include="Views\Account\LogOn.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\Home\Features.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Matches\Index.cshtml" />
     <Content Include="Views\Players\Index.cshtml" />
@@ -239,10 +247,8 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_LegendaryMatchTable.cshtml" />
     <Content Include="Views\Shared\_LogOnPartial.cshtml" />
-    <Content Include="Views\Shared\_PendingMatchTable.cshtml" />
     <Content Include="Views\Shared\_PlayerBaseData.cshtml" />
     <Content Include="Views\Shared\_RegisterMatch.cshtml" />
-    <Content Include="Views\Stats\Index.cshtml" />
     <Content Include="Views\Stats\Player.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
   </ItemGroup>
@@ -256,6 +262,9 @@
     <Content Include="Css\Stats.scss" />
     <Content Include="Css\_match-tables.scss" />
     <Content Include="Css\_mixins.scss" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Stats\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

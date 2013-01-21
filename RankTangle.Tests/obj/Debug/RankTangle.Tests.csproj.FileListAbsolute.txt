@@ -1,4 +1,3 @@
-C:\source\RankTangle\RankTangle.Tests\obj\Debug\RankTangle.Tests.csprojResolveAssemblyReference.cache
 C:\source\RankTangle\RankTangle.Tests\bin\Debug\RankTangle.Tests.dll.config
 C:\source\RankTangle\RankTangle.Tests\bin\Debug\RankTangle.Tests.dll
 C:\source\RankTangle\RankTangle.Tests\bin\Debug\RankTangle.Tests.pdb
@@ -34,5 +33,8 @@ C:\source\RankTangle\RankTangle.Tests\bin\Debug\MiniProfiler.pdb
 C:\source\RankTangle\RankTangle.Tests\bin\Debug\MiniProfiler.xml
 C:\source\RankTangle\RankTangle.Tests\bin\Debug\MongoDB.Bson.pdb
 C:\source\RankTangle\RankTangle.Tests\bin\Debug\MongoDB.Bson.xml
+C:\source\RankTangle\RankTangle.Tests\obj\Debug\RankTangle.Tests.csprojResolveAssemblyReference.cache
 C:\source\RankTangle\RankTangle.Tests\obj\Debug\RankTangle.Tests.dll
 C:\source\RankTangle\RankTangle.Tests\obj\Debug\RankTangle.Tests.pdb
+C:\source\RankTangle\RankTangle.Tests\bin\Debug\RestSharp.dll
+C:\source\RankTangle\RankTangle.Tests\bin\Debug\RestSharp.xml
