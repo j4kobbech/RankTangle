@@ -1,5 +1,6 @@
 ﻿namespace RankTangle.ControllerHelpers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using MongoDB.Driver;
@@ -40,7 +41,7 @@
         {
             return Dbh.GetCollection<Player>("Players")
                     .FindAll()
-                    .SetSortOrder(SortBy.Descending("Rating"))
+                    .SetSortOrder(SortBy.Descending("Ratings.OverAll"))
                     .FirstOrDefault();
         }
 
@@ -48,18 +49,18 @@
         {
             return Dbh.GetCollection<Player>("Players")
                     .FindAll()
-                    .SetSortOrder(SortBy.Ascending("Rating"))
+                    .SetSortOrder(SortBy.Ascending("Ratings.OverAll"))
                     .FirstOrDefault();
         }
 
-        public static Player GetHighestRatingEver(List<Player> players)
+        public static Player GetHighestOverAllRatingEver(List<Player> players)
         {
-            return players.OrderByDescending(m => m.Rating).FirstOrDefault();
+            return players.OrderByDescending(m => m.Ratings.OverAll).FirstOrDefault();
         }
 
-        public static Player GetLowestRatingEver(List<Player> players)
+        public static Player GetLowestOverAllRatingEver(List<Player> players)
         {
-            return players.OrderBy(m => m.Rating).FirstOrDefault();
+            return players.OrderBy(m => m.Ratings.OverAll).FirstOrDefault();
         }
 
         public static Streak GetLongestWinningStreak(List<Match> matches)
@@ -68,21 +69,14 @@
 
             foreach (var match in matches)
             {
-                if (match.WonTheMatch(match.TeamAPlayer1.Id))
+                foreach (var teamPlayer in match.GetWinningTeam().TeamPlayers)
                 {
-                    streaks.Add(match.TeamAPlayer1.Id);
-                    streaks.Add(match.TeamAPlayer2.Id);
-
-                    streaks.Reset(match.TeamBPlayer1.Id);
-                    streaks.Reset(match.TeamBPlayer2.Id);
+                    streaks.Add(teamPlayer.Id);
                 }
-                else
-                {
-                    streaks.Add(match.TeamBPlayer1.Id);
-                    streaks.Add(match.TeamBPlayer2.Id);
 
-                    streaks.Reset(match.TeamAPlayer1.Id);
-                    streaks.Reset(match.TeamAPlayer2.Id);
+                foreach (var teamPlayer in match.GetLosingTeam().TeamPlayers)
+                {
+                    streaks.Reset(teamPlayer.Id);
                 }
             }
 
@@ -95,21 +89,14 @@
 
             foreach (var match in matches)
             {
-                if (!match.WonTheMatch(match.TeamAPlayer1.Id))
+                foreach (var teamPlayer in match.GetWinningTeam().TeamPlayers)
                 {
-                    streaks.Add(match.TeamAPlayer1.Id);
-                    streaks.Add(match.TeamAPlayer2.Id);
-
-                    streaks.Reset(match.TeamBPlayer1.Id);
-                    streaks.Reset(match.TeamBPlayer2.Id);
+                    streaks.Reset(teamPlayer.Id);
                 }
-                else
-                {
-                    streaks.Add(match.TeamBPlayer1.Id);
-                    streaks.Add(match.TeamBPlayer2.Id);
 
-                    streaks.Reset(match.TeamAPlayer1.Id);
-                    streaks.Reset(match.TeamAPlayer2.Id);
+                foreach (var teamPlayer in match.GetLosingTeam().TeamPlayers)
+                {
+                    streaks.Add(teamPlayer.Id);
                 }
             }
 
@@ -124,30 +111,19 @@
             foreach (var match in matches)
             {
                 // Determine the winners and the losers
-                var winners = new Team();
-                var losers = new Team();
-
-                if (match.TeamAScore > match.TeamBScore)
-                {
-                    winners.MatchTeam.Add(match.TeamAPlayer1);
-                    winners.MatchTeam.Add(match.TeamAPlayer2);
-                    losers.MatchTeam.Add(match.TeamBPlayer1);
-                    losers.MatchTeam.Add(match.TeamBPlayer2);
-                }
-                else
-                {
-                    winners.MatchTeam.Add(match.TeamBPlayer1);
-                    winners.MatchTeam.Add(match.TeamBPlayer2);
-                    losers.MatchTeam.Add(match.TeamAPlayer1);
-                    losers.MatchTeam.Add(match.TeamAPlayer2);
-                }
+                var winners = match.GetWinningTeam();
+                var losers = match.GetLosingTeam();
 
                 // Get the rating modifier
-                var ratingModifier = Rating.GetRatingModifier(winners.GetTeamRating(), losers.GetTeamRating());
+                var overAllRatingModifier = Rating.GetRatingModifier(winners.GetTeamRatings.OverAll, losers.GetTeamRatings.OverAll);
+                var singleRatingModifier = Rating.GetRatingModifier(winners.GetTeamRatings.OverAll, losers.GetTeamRatings.OverAll);
+                var doubleRatingModifier = Rating.GetRatingModifier(winners.GetTeamRatings.OverAll, losers.GetTeamRatings.OverAll);
 
-                if (ratingModifier > ratingDiff.Rating)
+                var highestRatingModifier = Math.Max(Math.Max(overAllRatingModifier, singleRatingModifier), doubleRatingModifier);
+
+                if (highestRatingModifier > ratingDiff.Rating)
                 {
-                    ratingDiff.Rating = ratingModifier;
+                    ratingDiff.Rating = highestRatingModifier;
                     ratingDiff.Match = match;
                 }
             }

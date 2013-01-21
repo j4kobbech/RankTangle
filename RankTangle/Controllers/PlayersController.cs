@@ -2,11 +2,9 @@
 {
     using System.Linq;
     using System.Web.Mvc;
-
+    using MongoDB.Driver.Builders;
     using RankTangle.Models.Domain;
     using RankTangle.Models.ViewModels;
-
-    using MongoDB.Driver.Builders;
 
     public class PlayersController : BaseController
     {
@@ -14,10 +12,10 @@
         {
             var playerCollection = Dbh.GetCollection<Player>("Players")
                                         .FindAll()
-                                        .SetSortOrder(SortBy.Descending("Rating"))
+                                        .SetSortOrder(SortBy.Descending("Ratings.OverAll"))
                                         .ToList();
 
-            return this.View(new PlayersViewModel { AllPlayers = playerCollection });
+            return this.View(new PlayersViewModel { AllPlayers = playerCollection, Settings = this.Settings});
         }
     }
 }

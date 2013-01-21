@@ -6,6 +6,6 @@
     {
         public Player Player { get; set; }
 
-        public int Count { get; set; }
+        public int StreakCount { get; set; }
     }
 }

@@ -5,12 +5,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="robots" content="noindex">
-    @*<link rel="shortcut icon" href="@Url.Content("/Content/images/favicon.ico")" type="image/x-icon" />*@
 
     <title>
-        @if (ViewBag.Settings.Environment.ToString() != "Production")
+        @if (Model.Settings.Environment.ToString() != "Production")
         {
-            @ViewBag.Settings.Environment.ToString()
+            @Model.Settings.Environment.ToString()
         }
         @ViewBag.Title
     </title>
@@ -24,18 +23,6 @@
             document.write(unescape('%3Cscript src="@Url.Content("~/Javascript/thirdparty/jquery.min.js")" type="text/javascript"%3E%3C/script%3E'));
         }
     </script>
-    
-    <!-- Feedback plugin -->
-    @*<script type="text/javascript">
-        if (!!window.innerWidth === true && window.innerWidth > 930) {
-            var uvOptions = {};
-            (function () {
-                var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
-                uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/RphctqQQTB1Xn7A577qeA.js';
-                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
-            })();
-        }
-    </script>*@
 
 </head>
 <body>
@@ -46,17 +33,17 @@
             </div>
             <div id="app-title">
                 <span>
-                    @if (ViewBag.Settings.Environment.ToString() != "Production")
+                    @if (Model.Settings.Environment.ToString() != "Production")
                     {
-                        @ViewBag.Settings.Environment.ToString()  
+                        @Model.Settings.Environment.ToString()  
                     }
-                    @ViewBag.Settings.Name
+                    @Model.Settings.Name
                 </span>
             </div>
             <nav>
                 <ul id="main-menu">
                     <li class="Home">@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li class="Players">@Html.ActionLink("Scoreboard", "Index", "Players")</li>
+                    <li class="Players">@Html.ActionLink("Ladders", "Index", "Players")</li>
                     <li class="Matches">@Html.ActionLink("Matches", "Index", "Matches")</li>
                     <li class="Stats">@Html.ActionLink("Stats", "Index", "Stats")</li>
                     @if (Session["IsLoggedIn"].ToString().ToLower() == "true")
@@ -75,7 +62,6 @@
         </section>
         <footer>
             @RenderSection("Footer", false)
-            @Html.ActionLink("Features", "Features", "Home", null, new { @id = "feature-link" })
         </footer>
     </div>
     <!-- Deferred Javascript -->

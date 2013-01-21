@@ -2,8 +2,8 @@
     /* ******************************************************************
      * Match View
      */
-    var $r1 = $('#red-player-1'),
-        $b1 = $('#blue-player-1'),
+    var $r1 = $('#team-a-player-1'),
+        $b1 = $('#team-b-player-1'),
         $playerSelects = $('.select-player'),
         $openForm = $('#open-submit-match-form'),
         $submitMatchForm = $('#submit-match-form');
@@ -33,8 +33,8 @@
         valueBeforeChange = $thisSelect.find(':selected').val();
     }).on('change', function () {
         var $thisOption = $thisSelect.find(':selected'),
-            $redPlayer1 = $('#red-player-1'),
-            $bluePlayer1 = $('#blue-player-1'),
+            $teamAPlayer = $('#team-a-player-0'),
+            $teamBPlayer = $('#team-b-player-0'),
             $teamScores = $('.team-scores');
 
         // reset options 
@@ -50,7 +50,7 @@
         }
         
         // If at least one player on each team is selected, then show the score sliders
-        if (!!$redPlayer1.val() && !!$bluePlayer1.val()) {
+        if (!!$teamAPlayer.val() && !!$teamBPlayer.val()) {
             $teamScores.slideDown('fast', function () {
                 $teamScores.css({ 'overflow': '' });
             });
@@ -74,7 +74,7 @@
     // Add a tag on the players that match the current user
     var currentUserId = $("#current-user-id").val();
     if (!!currentUserId === true) {
-        $("." + currentUserId).append("<sup>(me)</sup>");
+        $("." + currentUserId).append('<sup title="It\'s you!">(*)</sup>');
     }
     
     /* ******************************************************************
@@ -83,8 +83,8 @@
     // Validation
     $('#submit-score-button').on('click', function (e) {
         var errm = "",
-            $teamRedScore = $('#team-red-score'),
-            $teamBlueScore = $('#team-blue-score');
+            $teamAScore = $('#team-a-score'),
+            $teamBScore = $('#team-b-score');
         
         clearErrorMessage();
 
@@ -97,8 +97,8 @@
             displayErrorMessage(errm);
         }
         
-        if ($teamRedScore.val() === $teamBlueScore.val()) {
-            displayErrorMessage("A FoosBall Fight must have a winner and a loser. Please resolve.");
+        if ($teamAScore.val() === $teamBScore.val()) {
+            displayErrorMessage("A Match must have a winner and a loser. Please resolve."); // Todo: Is this correct always?
         }
 
         if (errorState()) {
@@ -107,12 +107,12 @@
     });
 
     
-    $('#team-red-score-slider').on('change', function (e) {
-        $('#team-red-score').val(e.target.value);
+    $('#team-a-score-slider').on('change', function (e) {
+        $('#team-a-score').val(e.target.value);
     });
     
-    $('#team-blue-score-slider').on('change', function (e) {
-        $('#team-blue-score').val(e.target.value);
+    $('#team-b-score-slider').on('change', function (e) {
+        $('#team-b-score').val(e.target.value);
     });
     
 

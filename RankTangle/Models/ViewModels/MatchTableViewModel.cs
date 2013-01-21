@@ -2,9 +2,10 @@
 {
     using System.Collections.Generic;
 
+    using RankTangle.Models.Base;
     using RankTangle.Models.Domain;
 
-    public class MatchTableViewModel
+    public class MatchTableViewModel : BaseViewModel
     {
         public IEnumerable<Match> Matches { get; set; }
 

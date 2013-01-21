@@ -4,7 +4,7 @@
 }
 @section Javascript
 { 
-    <script async src="@Url.Content("~/Javascript/highcharts.js")"></script>
+    <script async src="@Url.Content("~/Javascript/thirdparty/highcharts.js")"></script>
     <script async src="@Url.Content("~/Javascript/PlayerStats.js")"></script>
 }
 @section Css{ <link rel="stylesheet" href="@Url.Content("~/Css/Stats.css")"/>}
@@ -15,7 +15,7 @@
         <div class="label">Player ranking:</div>
         <div>@Model.Ranking <span class="thin">of</span> @Model.TotalNumberOfPlayers</div>
         <div class="label">Elo rating:</div>
-        <div>@Model.Player.Rating.ToString("F2")</div>
+        <div>@Model.Player.Ratings.OverAll.ToString("F2")</div>
         <div class="label">Winning ratio:</div>
         <div>@Model.Player.Ratio.ToString("F2")%</div>
         <br/>
@@ -95,23 +95,35 @@
                 <text>was beat up by </text><br/>
             }
 
-            @if (Model.LatestMatch.IsOnTeamA(Model.Player.Id))
+            @if (Model.LatestMatch.IsPlayerOnTeamA(Model.Player.Id))
             {
+                foreach (var player in Model.LatestMatch.TeamB.TeamPlayers)
+                {
+                    <a href="@Url.Action("Player","Stats", new {playerId = @player.Id })">@player.Name</a>  
+                }
+                @*
                 <a href="@Url.Action("Player","Stats", new {playerId = @Model.LatestMatch.TeamBPlayer1.Id })">@Model.LatestMatch.TeamBPlayer1.Name</a>
                 if (@String.IsNullOrEmpty(Model.LatestMatch.TeamBPlayer2.Name) == false)
                 {
                     <text>&</text>
                     <a href="@Url.Action("Player","Stats", new {playerId = @Model.LatestMatch.TeamBPlayer2.Id })">@Model.LatestMatch.TeamBPlayer2.Name</a>
                 }
+                *@
             } 
             else
             {
+                foreach (var player in Model.LatestMatch.TeamA.TeamPlayers)
+                {
+                    <a href="@Url.Action("Player","Stats", new {playerId = @player.Id })">@player.Name</a>  
+                }
+                @*
                 <a href="@Url.Action("Player","Stats", new {playerId = @Model.LatestMatch.TeamAPlayer1.Id })">@Model.LatestMatch.TeamAPlayer1.Name</a>
                 if (@String.IsNullOrEmpty(Model.LatestMatch.TeamAPlayer2.Name) == false)
                 {
                     <text>&</text>
                     <a href="@Url.Action("Player","Stats", new {playerId = @Model.LatestMatch.TeamAPlayer2.Id })">@Model.LatestMatch.TeamAPlayer2.Name</a>
                 }
+                *@
             }
         </div>
     </div>
@@ -126,10 +138,10 @@
     <legend>@(Model.Player.Name)s Fights</legend>
     @if (Model.PlayedMatches.Any())
     {
-        Html.RenderPartial("_LegendaryMatchTable", new MatchTableViewModel { Matches = Model.PlayedMatches, User = null });
+        Html.RenderPartial("_LegendaryMatchTable", new MatchTableViewModel { Matches = Model.PlayedMatches, User = null, Settings = Model.Settings });
     }
     else
     {
-        <text><span class="dimmed">Hrmmm... Guess Foosball is not a very popular sport around here...</span></text>
+        <text><span class="dimmed">@Model.Player.Name hasn't played a match yet ...</span></text>
     }
 </fieldset>

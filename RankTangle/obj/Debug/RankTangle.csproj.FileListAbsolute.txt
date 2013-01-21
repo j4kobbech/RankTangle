@@ -1,4 +1,3 @@
-C:\source\RankTangle\RankTangle\obj\Debug\RankTangle.csprojResolveAssemblyReference.cache
 C:\source\RankTangle\RankTangle\bin\RankTangle.dll
 C:\source\RankTangle\RankTangle\bin\RankTangle.pdb
 C:\source\RankTangle\RankTangle\bin\Microsoft.Web.Infrastructure.dll
@@ -33,3 +32,6 @@ C:\source\RankTangle\RankTangle\bin\System.Web.WebPages.Deployment.xml
 C:\source\RankTangle\RankTangle\bin\System.Web.WebPages.Razor.xml
 C:\source\RankTangle\RankTangle\obj\Debug\RankTangle.dll
 C:\source\RankTangle\RankTangle\obj\Debug\RankTangle.pdb
+C:\source\RankTangle\RankTangle\obj\Debug\RankTangle.csprojResolveAssemblyReference.cache
+C:\source\RankTangle\RankTangle\bin\RestSharp.dll
+C:\source\RankTangle\RankTangle\bin\RestSharp.xml

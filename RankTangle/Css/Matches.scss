@@ -56,9 +56,9 @@
     margin: 10px auto 15px auto;
     display: block;
 }
-#team-red-players {
+#team-a-players {
     float: left;}
-#team-blue-players {
+#team-b-players {
     float: right;}
 
 .team-scores {
@@ -70,7 +70,7 @@
     .opponent {
         padding: 20px 0;
 
-        input {
+        input {@import url('_match-tables.scss');
             width: 40px;
             margin: 0 auto;
             display: block;

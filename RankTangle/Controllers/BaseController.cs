@@ -15,9 +15,8 @@
             this.Settings = new Config();
 
             this.Dbh = new Db(environment).Dbh;
+            this.Settings = this.Dbh.GetCollection<Config>("Config").FindOne();
             this.Settings.Environment = environment;
-
-            ViewBag.Settings = this.Settings;
         }
 
         protected Config Settings { get; set; }

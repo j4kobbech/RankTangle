@@ -184,38 +184,43 @@
         [HttpPost]
         public ActionResult Register(PlayerBaseDataViewModel viewModel)
         {
-            var email = viewModel.Player.Email.ToLower();
-            if (this.Settings.EnableDomainValidation)
+            if (ModelState.IsValid)
             {
-                email += "@" + this.Settings.Domain;
+                var email = viewModel.Player.Email.ToLower();
+                if (this.Settings.EnableDomainValidation)
+                {
+                    email += "@" + this.Settings.Domain;
+                }
+
+                var name = viewModel.Player.Name;
+                var password = Md5.CalculateMd5(viewModel.Player.Password);
+                var nickname = viewModel.Player.NickName;
+                var gender = viewModel.Player.Gender;
+            
+                var playerCollection = this.Dbh.GetCollection<Player>("Players");
+
+                var newPlayer = new Player
+                                    {
+                                        Id = BsonObjectId.GenerateNewId().ToString(),
+                                        Email = email,
+                                        Name = name,
+                                        Gender = gender,
+                                        Password = password,
+                                        NickName = nickname,
+                                        Won = 0,
+                                        Lost = 0,
+                                        Played = 0
+                                    };
+
+                playerCollection.Save(newPlayer);
+
+                Login(newPlayer);
+                var restResponse = Email.SendSimpleEmail();
+
+                return this.Redirect(Url.Action("Index", "Players") + "#" + newPlayer.Id);
             }
 
-            var name = viewModel.Player.Name;
-            var password = Md5.CalculateMd5(viewModel.Player.Password);
-            var nickname = viewModel.Player.NickName;
-            var gender = viewModel.Player.Gender;
-            
-            var playerCollection = this.Dbh.GetCollection<Player>("Players");
-
-            var newPlayer = new Player
-                                {
-                                    Id = BsonObjectId.GenerateNewId().ToString(),
-                                    Email = email,
-                                    Name = name,
-                                    Gender = gender,
-                                    Password = password,
-                                    NickName = nickname,
-                                    Won = 0,
-                                    Lost = 0,
-                                    Played = 0
-                                };
-
-            playerCollection.Save(newPlayer);
-
-            Login(newPlayer);
-
-            Events.SubmitEvent("Create", "Player", newPlayer, newPlayer.Id);
-            return this.Redirect(Url.Action("Index", "Players") + "#" + newPlayer.Id);
+            return this.View("Register");
         }
 
         [HttpGet]
@@ -266,9 +271,7 @@
                     player.Name = string.IsNullOrEmpty(viewModel.Player.Name)
                                         ? player.Name
                                         : viewModel.Player.Name;
-                    player.Gender = string.IsNullOrEmpty(gender) 
-                                        ? player.Gender 
-                                        : gender;
+                    player.Gender = gender;
                     player.Password = string.IsNullOrEmpty(viewModel.Player.Password)
                                         ? player.Password
                                         : Md5.CalculateMd5(viewModel.Player.Password);
