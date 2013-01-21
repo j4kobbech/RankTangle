@@ -5,6 +5,7 @@ C:\source\RankTangle\RankTangle\bin\MiniProfiler.dll
 C:\source\RankTangle\RankTangle\bin\MongoDB.Bson.dll
 C:\source\RankTangle\RankTangle\bin\MongoDB.Driver.dll
 C:\source\RankTangle\RankTangle\bin\Newtonsoft.Json.dll
+C:\source\RankTangle\RankTangle\bin\RestSharp.dll
 C:\source\RankTangle\RankTangle\bin\System.Net.Http.Formatting.dll
 C:\source\RankTangle\RankTangle\bin\System.Web.Helpers.dll
 C:\source\RankTangle\RankTangle\bin\System.Web.Http.dll
@@ -20,6 +21,7 @@ C:\source\RankTangle\RankTangle\bin\MongoDB.Bson.pdb
 C:\source\RankTangle\RankTangle\bin\MongoDB.Bson.xml
 C:\source\RankTangle\RankTangle\bin\MongoDB.Driver.pdb
 C:\source\RankTangle\RankTangle\bin\MongoDB.Driver.xml
+C:\source\RankTangle\RankTangle\bin\RestSharp.xml
 C:\source\RankTangle\RankTangle\bin\Newtonsoft.Json.xml
 C:\source\RankTangle\RankTangle\bin\System.Net.Http.Formatting.xml
 C:\source\RankTangle\RankTangle\bin\System.Web.Helpers.xml
@@ -30,8 +32,6 @@ C:\source\RankTangle\RankTangle\bin\System.Web.Razor.xml
 C:\source\RankTangle\RankTangle\bin\System.Web.WebPages.xml
 C:\source\RankTangle\RankTangle\bin\System.Web.WebPages.Deployment.xml
 C:\source\RankTangle\RankTangle\bin\System.Web.WebPages.Razor.xml
+C:\source\RankTangle\RankTangle\obj\Debug\RankTangle.csprojResolveAssemblyReference.cache
 C:\source\RankTangle\RankTangle\obj\Debug\RankTangle.dll
 C:\source\RankTangle\RankTangle\obj\Debug\RankTangle.pdb
-C:\source\RankTangle\RankTangle\obj\Debug\RankTangle.csprojResolveAssemblyReference.cache
-C:\source\RankTangle\RankTangle\bin\RestSharp.dll
-C:\source\RankTangle\RankTangle\bin\RestSharp.xml
