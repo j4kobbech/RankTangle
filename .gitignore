@@ -1,8 +1,8 @@
 bin/
 obj/
 _ReSharper.RankTangle/
-RankTangle/Migration/*.json
-RankTangle.Tests/
+RankTangle.Tests/bin
+RankTangle.Tests/obj
 *.cache
 *.suo
 *.orig
