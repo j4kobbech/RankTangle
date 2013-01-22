@@ -16,8 +16,8 @@
     <div>
         @Html.Partial("_PlayerBaseData", Model)
 
-        <div>@Html.LabelFor(m => Model.Player.Password, "Repeat password")</div>
-        <div>@Html.Password("Password", null, new { placeholder = "Repeat password", @id = "Player_RepeatPassword" })</div>
+        <div>@Html.LabelFor(m => Model.RepeatPassword, "Repeat password")</div>
+        <div>@Html.Password("Password", Model.RepeatPassword, new { placeholder = "Repeat password", @id = "Player_RepeatPassword" })</div>
 
         <div class="validation-message small All"></div>
         <div class="validation-message small Email"></div>

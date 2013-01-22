@@ -22,6 +22,8 @@
 
         public Player Player { get; set; }
 
+        public string RepeatPassword { get; set; }
+
         public bool SaveSuccess { get; set; }
 
         public string ReferralUrl { get; set; }

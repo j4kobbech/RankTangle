@@ -119,6 +119,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ControllerHelpers\AccountControllerHelpers.cs" />
     <Compile Include="ControllerHelpers\MatchControllerHelpers.cs" />
     <Compile Include="ControllerHelpers\DbHelper.cs" />
     <Compile Include="ControllerHelpers\StatsControllerHelpers.cs" />
@@ -265,6 +266,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Stats\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\Activate.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

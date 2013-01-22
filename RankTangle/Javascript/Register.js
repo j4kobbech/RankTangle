@@ -83,10 +83,10 @@
 // Synch call to server to check if email is alredy registered
 function emailIsValid(email) {
     $.ajax({
-        type: post,
+        type: 'post',
         url: '/Account/PlayerEmailIsValid',
         cache: false,
-        data: { email: email },
+        data: { email: email || "" },
         dataType: 'json',
         async: false,
         success: function (response) {

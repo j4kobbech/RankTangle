@@ -11,96 +11,107 @@
 
 <fieldset class="statistics">
     <legend>Stats for @Model.Player.Name</legend>
-    <div class="second">
-        <div class="label">Player ranking:</div>
-        <div>@Model.Ranking <span class="thin">of</span> @Model.TotalNumberOfPlayers</div>
-        <div class="label">Elo rating:</div>
-        <div>@Model.Player.Ratings.OverAll.ToString("F2")</div>
-        <div class="label">Winning ratio:</div>
-        <div>@Model.Player.Ratio.ToString("F2")%</div>
-        <br/>
-        <div class="label">Fights Total:</div>
-        <div>@Model.Played</div>
-        <div class="label">Won Fights:</div>
-        <div>@Model.Won</div>
-        <div class="label">Lost Fights:</div>
-        <div>@Model.Lost</div>
-        <br/>
-    </div>
-        
-    <div class="second">
-        <div class="label" title="The BFF (Best Friend Forever) is the player together with whom @Model.Player.Name has fought most often">Best Friend Forever:</div>
-        <div>
-            @if (@Model.Bff != null)
-            {
-                <a href="@Url.Action("Player", "Stats", new { playerId = @Model.Bff.Player.Id})">@Model.Bff.Player.Name</a><text> - @Model.Bff.Occurrences fights</text>
-            } 
-            else
-            {
-                <text>no best friends :(</text>
-            }
-        </div>
-        <div class="label" title="The RBFF (Real Best Friend Forever) is the player together with whom @Model.Player.Name has won most fights">Real Best Friend Forever:</div>
-        <div>
-            @if (@Model.Rbff != null)
-            {
-                <a href="@Url.Action("Player", "Stats", new { playerId = @Model.Rbff.Player.Id})">@Model.Rbff.Player.Name</a><text> - @Model.Rbff.Occurrences wins</text>
-            }
-            else
-            {
-                <text> - </text>
-            }
-        </div>
-        <div class="label">Evil Arch Enemy:</div>
-        <div>
-            @if (@Model.Eae != null)
-            {
-                <a href="@Url.Action("Player", "Stats", new { playerId = @Model.Eae.Player.Id})">@Model.Eae.Player.Name</a><text> - @Model.Eae.Occurrences losses</text>
-            }
-            else
-            {
-                <text> - </text>
-            }
+    
+    @if (Model.Player.Played == 0)
+    {
+        <span>@Model.Player.Name has no Stats yet ...</span>
+    }
+    else
+    {
+        <div class="second">
+            <div class="label">Player ranking:</div>
+            <div>@Model.Ranking <span class="thin">of</span> @Model.TotalNumberOfPlayers</div>
+            <div class="label">Elo rating:</div>
+            <div>@Model.Player.Ratings.OverAll.ToString("F2")</div>
+            <div class="label">Winning ratio:</div>
+            <div>@Model.Player.Ratio.ToString("F2")%</div>
+            <br/>
+            <div class="label">Fights Total:</div>
+            <div>@Model.Played</div>
+            <div class="label">Won Fights:</div>
+            <div>@Model.Won</div>
+            <div class="label">Lost Fights:</div>
+            <div>@Model.Lost</div>
+            <br/>
         </div>
 
-        <br/>
-
-        <div class="label">Preferred Color:</div>
-        <div>
-            @if (@Model.PreferredColor != null)
-            {
-                <text>@Model.PreferredColor.Color - @Model.PreferredColor.Occurrences fights</text>
-            }
-        </div>
-        <div class="label">Winning Color:</div>
-        <div>
-            @if (@Model.WinningColor != null)
-            {
-                <text>@Model.WinningColor.Color - @Model.WinningColor.Occurrences wins</text>
-            }
-            else
-            {
-                <text>:-(</text>
-            }
-        </div>  
-        <br/>
-        <div class="label">Latest fight:</div>
-        <div>
-            @if (Model.LatestMatch.WonTheMatch(Model.Player.Id))
-            {
-                <text>beat up </text>
-            }
-            else
-            {
-                <text>was beat up by </text><br/>
-            }
-
-            @if (Model.LatestMatch.IsPlayerOnTeamA(Model.Player.Id))
-            {
-                foreach (var player in Model.LatestMatch.TeamB.TeamPlayers)
+        <div class="second">
+            <div class="label" title="The BFF (Best Friend Forever) is the player together with whom @Model.Player.Name has fought most often">Best Friend Forever:</div>
+            <div>
+                @if (@Model.Bff != null)
                 {
-                    <a href="@Url.Action("Player","Stats", new {playerId = @player.Id })">@player.Name</a>  
+                    <a href="@Url.Action("Player", "Stats", new { playerId = @Model.Bff.Player.Id })">@Model.Bff.Player.Name</a>
+                    <text> - @Model.Bff.Occurrences fights</text>
                 }
+                else
+                {
+                    <text>no best friends :(</text>
+                }
+            </div>
+            <div class="label" title="The RBFF (Real Best Friend Forever) is the player together with whom @Model.Player.Name has won most fights">Real Best Friend Forever:</div>
+            <div>
+                @if (@Model.Rbff != null)
+                {
+                    <a href="@Url.Action("Player", "Stats", new { playerId = @Model.Rbff.Player.Id })">@Model.Rbff.Player.Name</a>
+                    <text> - @Model.Rbff.Occurrences wins</text>
+                }
+                else
+                {
+                    <text> - </text>
+                }
+            </div>
+            <div class="label">Evil Arch Enemy:</div>
+            <div>
+                @if (@Model.Eae != null)
+                {
+                    <a href="@Url.Action("Player", "Stats", new { playerId = @Model.Eae.Player.Id })">@Model.Eae.Player.Name</a>
+                    <text> - @Model.Eae.Occurrences losses</text>
+                }
+                else
+                {
+                    <text> - </text>
+                }
+            </div>
+
+            <br/>
+
+            <div class="label">Preferred Color:</div>
+            <div>
+                @if (@Model.PreferredColor != null)
+                {
+                    <text>@Model.PreferredColor.Color - @Model.PreferredColor.Occurrences fights</text>
+                }
+            </div>
+            <div class="label">Winning Color:</div>
+            <div>
+                @if (@Model.WinningColor != null)
+                {
+                    <text>@Model.WinningColor.Color - @Model.WinningColor.Occurrences wins</text>
+                }
+                else
+                {
+                    <text>:-(</text>
+                }
+            </div>  
+            <br/>
+            <div class="label">Latest fight:</div>
+            <div>
+                @if (Model.LatestMatch.WonTheMatch(Model.Player.Id))
+                {
+                    <text>beat up </text>
+                }
+                else
+                {
+                    <text>was beat up by </text>
+                    <br/>
+                }
+
+                @if (Model.LatestMatch.IsPlayerOnTeamA(Model.Player.Id))
+                {
+                    foreach (var player in Model.LatestMatch.TeamB.TeamPlayers)
+                    {
+                        <a href="@Url.Action("Player", "Stats", new { playerId = @player.Id })">@player.Name</a>
+                    }
                 @*
                 <a href="@Url.Action("Player","Stats", new {playerId = @Model.LatestMatch.TeamBPlayer1.Id })">@Model.LatestMatch.TeamBPlayer1.Name</a>
                 if (@String.IsNullOrEmpty(Model.LatestMatch.TeamBPlayer2.Name) == false)
@@ -109,13 +120,13 @@
                     <a href="@Url.Action("Player","Stats", new {playerId = @Model.LatestMatch.TeamBPlayer2.Id })">@Model.LatestMatch.TeamBPlayer2.Name</a>
                 }
                 *@
-            } 
-            else
-            {
-                foreach (var player in Model.LatestMatch.TeamA.TeamPlayers)
-                {
-                    <a href="@Url.Action("Player","Stats", new {playerId = @player.Id })">@player.Name</a>  
                 }
+                else
+                {
+                    foreach (var player in Model.LatestMatch.TeamA.TeamPlayers)
+                    {
+                        <a href="@Url.Action("Player", "Stats", new { playerId = @player.Id })">@player.Name</a>
+                    }
                 @*
                 <a href="@Url.Action("Player","Stats", new {playerId = @Model.LatestMatch.TeamAPlayer1.Id })">@Model.LatestMatch.TeamAPlayer1.Name</a>
                 if (@String.IsNullOrEmpty(Model.LatestMatch.TeamAPlayer2.Name) == false)
@@ -124,9 +135,10 @@
                     <a href="@Url.Action("Player","Stats", new {playerId = @Model.LatestMatch.TeamAPlayer2.Id })">@Model.LatestMatch.TeamAPlayer2.Name</a>
                 }
                 *@
-            }
+                }
+            </div>
         </div>
-    </div>
+    }
 </fieldset>
 
 <fieldset>

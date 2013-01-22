@@ -1,7 +1,6 @@
 ﻿namespace RankTangle.Controllers
 {
     using System;
-    using System.Web;
     using System.Web.Mvc;
     using MongoDB.Bson;
     using MongoDB.Driver.Builders;
@@ -12,38 +11,7 @@
 
     public class AccountController : BaseController
     {
-        public static string GetAuthToken(Player player)
-        {
-            return Md5.CalculateMd5(player.Id + player.Email + "RankTangle4Ever");
-        }
-
-        // COOKIE DOUGH
-        public void CreateRememberMeCookie(Player player)
-        {
-            HttpContext.Response.Cookies.Add(new HttpCookie("RankTangleAuth"));
-            var httpCookie = ControllerContext.HttpContext.Response.Cookies["RankTangleAuth"];
-            if (httpCookie != null)
-            {
-                httpCookie["Token"] = GetAuthToken(player);
-            }
-
-            if (httpCookie != null)
-            {
-                httpCookie.Expires = DateTime.Now.AddDays(30);
-            }
-        }
-
-        public void RemoveRememberMeCookie()
-        {
-            ControllerContext.HttpContext.Response.Cookies.Add(new HttpCookie("RankTangleAuth"));
-            var httpCookie = ControllerContext.HttpContext.Response.Cookies["RankTangleAuth"];
-            if (httpCookie != null)
-            {
-                httpCookie.Expires = DateTime.Now.AddDays(-1);
-            }
-        }
-
-        public bool Login(Player player)
+        public bool AutoLogin(Player player)
         {
             // Set or remove cookie for future auto-login
             if (player != null)
@@ -55,24 +23,29 @@
                     var autoLoginCollection = this.Dbh.GetCollection<AutoLogin>("AutoLogin");
                     var autoLogin = autoLoginCollection.FindOne(Query.EQ("Email", player.Email));
 
+                    if (!player.Activated)
+                    {
+                        RedirectToAction("Activate");
+                    }
+
                     if (autoLogin == null)
                     {
                         autoLogin = new AutoLogin
                         {
                             Email = player.Email,
-                            Token = GetAuthToken(player),
+                            Token = AccountControllerHelpers.GetAuthToken(player),
                             Created = DateTime.Now
                         };
                         autoLoginCollection.Save(autoLogin);
                     }
 
-                    CreateRememberMeCookie(player);
+                    AccountControllerHelpers.CreateRememberMeCookie(player, HttpContext);
                     player.RememberMe = player.RememberMe;
                     playerCollection.Save(player);
                 }
                 else
                 {
-                    RemoveRememberMeCookie();
+                    AccountControllerHelpers.RemoveRememberMeCookie(HttpContext);
                 }
 
                 this.Session["Admin"] = this.Settings.AdminAccount == player.Email;
@@ -100,7 +73,7 @@
                         var playerCollection = this.Dbh.GetCollection<Player>("Players");
                         var player = playerCollection.FindOne(Query.EQ("Email", autoLoginToken.Email.ToLower()));
                     
-                        if (Login(player))
+                        if (AutoLogin(player))
                         {
                             // Go back to where we were before logging in
                             var referrer = this.Request.UrlReferrer;
@@ -142,7 +115,7 @@
             {
                 if (player.Password == Md5.CalculateMd5(model.Password))
                 {
-                    if (Login(player))
+                    if (AutoLogin(player))
                     {
                         return Redirect(model.RefUrl);
                     }
@@ -157,7 +130,7 @@
         public ActionResult LogOff()
         {
             Session.Clear();
-            RemoveRememberMeCookie();
+            AccountControllerHelpers.RemoveRememberMeCookie(HttpContext);
             
             // Go back to where we were before logging in
             var urlReferrer = this.Request.UrlReferrer;
@@ -214,8 +187,8 @@
 
                 playerCollection.Save(newPlayer);
 
-                Login(newPlayer);
-                var restResponse = Email.SendSimpleEmail();
+                AutoLogin(newPlayer);
+                Email.SendSimpleEmail(); // TODO: Change call to this static class
 
                 return this.Redirect(Url.Action("Index", "Players") + "#" + newPlayer.Id);
             }
@@ -334,5 +307,12 @@
 
             return Json(new { url = string.Empty }, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpGet]
+        public ActionResult Activate()
+        {
+            return this.View();
+        }
     }
 }
+ 

@@ -57,7 +57,6 @@ function errorState() {
         if (value) {
             return state = true;
         }
-        return undefined;
     });
     
     return state;

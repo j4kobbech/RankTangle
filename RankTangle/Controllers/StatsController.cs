@@ -79,6 +79,11 @@
                            .Where(match => match.MatchContainsPlayer(playerId))
                            .Where(match => match.GameOverTime != DateTime.MinValue);
 
+                    if (!matches.Any())
+                    {
+                        return this.View(stats);
+                    }  
+
                     var playedMatches = matches as List<Match> ?? matches.ToList();
                     stats.PlayedMatches = playedMatches.OrderByDescending(x => x.GameOverTime);
                     stats.LatestMatch = playedMatches.Last();
