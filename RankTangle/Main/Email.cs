@@ -38,7 +38,7 @@
             request.AddParameter("domain", mailGunAccount, ParameterType.UrlSegment);
             request.Resource = "{domain}/messages";
             request.AddParameter("from", emailFrom);
-            emailTo.ForEach(x => request.AddParameter("to", x));
+            request.AddParameter("to", emailTo);    
             request.AddParameter("subject", subject);
             request.AddParameter("text", textBody);
             request.Method = Method.POST;
