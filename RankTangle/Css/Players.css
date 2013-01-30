@@ -31,8 +31,6 @@
       font-size: 10px;
       margin-left: 2px;
       margin-right: 5px; }
-  .player .nickname {
-    display: none; }
 
 .won-lost-played {
   display: inline;
@@ -58,9 +56,7 @@
 
 @media only screen and (min-width: 470px) {
   #list-of-players .player .name {
-    width: 70%; }
-  #list-of-players .player .nickname {
-    display: inline; } }
+    width: 70%; } }
 /* Player Details View
 ----------------------------------------------------------*/
 #stats-title {
@@ -89,9 +85,7 @@
 
 @media only screen and (min-width: 470px) {
   #player-match-history .name {
-    display: block; }
-  #player-match-history .nickname {
-    display: none; } }
+    display: block; } }
 #go-back {
   text-decoration: underline; }
 

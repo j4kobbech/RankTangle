@@ -11,7 +11,6 @@
             Name = "RankTangle";
             Domain = "gmail.com";
             AdminAccount = "j4kobbech@gmail.com";
-            EnableDomainValidation = true;
             MinTeamNumberOfTeamMembers = 1;
             MaxTeamNumberOfTeamMembers = 2;
             TeamALabel = "Yellow Team";
@@ -23,8 +22,6 @@
         public string Domain { get; set; }
 
         public string AdminAccount { get; set; } 
-
-        public bool EnableDomainValidation { get; set; }
 
         public int MinTeamNumberOfTeamMembers { get; set; }
  

@@ -33,10 +33,6 @@
             @Html.LabelFor(m => m.Settings.MaxTeamNumberOfTeamMembers, "Max. players on a team")
             @Html.TextBoxFor(m => m.Settings.MaxTeamNumberOfTeamMembers)
 
-            @Html.LabelFor(m => m.Settings.EnableDomainValidation, "Enable domain validation?")
-            @Html.CheckBoxFor(m => m.Settings.EnableDomainValidation)
-            @Html.TextBoxFor(m => m.Settings.Domain)
-
             <input name="save-config" type="submit" value="Save" class="button"/>
         }
     </fieldset>

@@ -27,8 +27,6 @@
 
         public string Name { get; set; }
         
-        public string NickName { get; set; }
-
         public Gender Gender { get; set; }
 
         public string Password { get; set; }

@@ -41,9 +41,6 @@
             margin-right: 5px;
         }
     }
-    .nickname {
-        display: none;
-    }
 }
 .won-lost-played {
     display: inline;
@@ -79,7 +76,6 @@
     #list-of-players {
         .player {
             .name { width: 70%; }
-            .nickname { display: inline; }
         }
     }
 }
@@ -123,9 +119,6 @@
     #player-match-history {
         .name {
             display: block;
-        }
-        .nickname {
-            display: none;
         }
     }
 }

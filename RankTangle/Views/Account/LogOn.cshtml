@@ -13,13 +13,7 @@
 {   @Html.HiddenFor(m => m.RefUrl)
     <div>
         <div>@Html.LabelFor(m => m.Email)</div>
-        <div>
-            @Html.TextBoxFor(m => m.Email, new { placeholder = "Email", @class = Model.Settings.EnableDomainValidation ? "short" : "long" })
-            @if (Model.Settings.EnableDomainValidation)
-            {
-                <text>@@</text>@Model.Settings.Domain
-            }
-        </div>
+        <div>@Html.TextBoxFor(m => m.Email, new { placeholder = "Email", @class = "long" })</div>
         <br>
         <div>@Html.LabelFor(m => m.Password)</div>
         <div>@Html.PasswordFor(m => m.Password, new { placeholder = "Password", autocapitalize = "off", autocorrect = "off"})</div>

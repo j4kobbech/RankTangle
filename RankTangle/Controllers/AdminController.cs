@@ -66,7 +66,6 @@
                 Settings.TeamBLabel = viewModel.Settings.TeamBLabel;
                 Settings.Domain = viewModel.Settings.Domain;
                 Settings.AdminAccount = viewModel.Settings.AdminAccount;
-                Settings.EnableDomainValidation = viewModel.Settings.EnableDomainValidation;
                 Settings.MinTeamNumberOfTeamMembers = viewModel.Settings.MinTeamNumberOfTeamMembers;
                 Settings.MaxTeamNumberOfTeamMembers = viewModel.Settings.MaxTeamNumberOfTeamMembers;
 

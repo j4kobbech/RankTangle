@@ -52,15 +52,6 @@
         }
     });
 
-    $('#Player_Name').on('change', function (e) {
-        var playerNickName = $('#Player_NickName');
-        var playerName = e.target.value;
-        
-        if (!playerNickName.val()) { // only set the nickname automatically if the input field is already empty
-            playerNickName.val(playerName.substr(0,5));
-        }
-    });
-
     $('#Player_Email').on('change', function () {
         var playerEmail = $(this).val();
         
@@ -93,25 +84,6 @@ function emailExists(email) {
                 displayErrorMessage("A player with this email already exists ("+response.Name+")", "Email");
             } else {
                 clearErrorMessage("Email");
-            }
-        }
-    });
-}
-
-// Synch call to server to check if name is alredy registered
-function nameExists(name) {
-    $.ajax({
-        type: 'post',
-        url: '/Account/PlayerNameExists',
-        cache: false,
-        data: { name: name },
-        dataType: 'json',
-        async: false,
-        success: function (response) {
-            if (response.Exists) {
-                displayErrorMessage("A player with this name already exists (" + response.Email + ")", "Name");
-            } else {
-                clearErrorMessage("Name");
             }
         }
     });

@@ -7,7 +7,7 @@ table thead {
   border-bottom: 2px solid #222222; }
 table tbody tr:nth-child(even) {
   background-color: #dddddd; }
-table th.team-names, table th.nicknames, table th.score, table td.team-names, table td.nicknames, table td.score {
+table th.team-names, table th.score, table td.team-names, table td.score {
   text-align: left; }
 table th.rating, table th.played, table th.created, table td.rating, table td.played, table td.created {
   text-align: right; }
@@ -46,12 +46,10 @@ table .winner {
   .list-of-matches {
     line-height: 1.0em; }
 
-  #pending-matches .nicknames {
-    display: none; }
   #pending-matches .names, #pending-matches .created {
     display: table-cell; }
 
-  #legendary-matches .nicknames, #legendary-matches .short-time {
+  #legendary-matches .short-time {
     display: none; }
   #legendary-matches .names, #legendary-matches .created, #legendary-matches .long-time {
     display: table-cell; } }
@@ -133,7 +131,7 @@ table .winner {
   float: right;
   width: 45%; }
 
-.names sup, .nicknames sup {
+.names sup {
   font-weight: normal;
   margin-left: 3px; }
 

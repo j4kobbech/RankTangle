@@ -13,7 +13,7 @@ table {
         background-color: $light;
     }
     th,td {
-        &.team-names, &.nicknames, &.score { text-align: left;}
+        &.team-names, &.score { text-align: left;}
         &.rating, &.played, &.created { text-align: right;}
         &.rating {padding-right: 10px;}
     }
@@ -59,11 +59,10 @@ table {
         line-height: 1.0em;
     }
     #pending-matches {
-        .nicknames { display: none;}
         .names, .created { display: table-cell;}
     }
     #legendary-matches {
-        .nicknames, .short-time { display: none; }
+        .short-time { display: none; }
         .names, .created, .long-time { display: table-cell; }
     }
 }

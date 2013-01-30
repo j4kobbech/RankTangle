@@ -103,11 +103,6 @@
         {
             model.Settings = this.Settings;
             var email = model.Email.ToLower();
-            if (this.Settings.EnableDomainValidation)
-            {
-                email += "@" + this.Settings.Domain;
-            }
-
             var playerCollection = this.Dbh.GetCollection<Player>("Players");
             var player = playerCollection.FindOne(Query.EQ("Email", email));
             
@@ -160,6 +155,7 @@
             if (ModelState.IsValid)
             {
                 viewModel = AccountControllerHelpers.ValidateRegisterViewModel(viewModel);
+                
                 if (viewModel.ListOfErrorMessages.Count > 0)
                 {
                     viewModel.Settings = this.Settings;
@@ -168,14 +164,8 @@
                 }
 
                 var email = viewModel.Player.Email.ToLower();
-                if (this.Settings.EnableDomainValidation)
-                {
-                    email += "@" + this.Settings.Domain;
-                }
-
                 var name = viewModel.Player.Name;
                 var password = Md5.CalculateMd5(viewModel.Player.Password);
-                var nickname = viewModel.Player.NickName;
                 var gender = viewModel.Player.Gender;
             
                 var playerCollection = this.Dbh.GetCollection<Player>("Players");
@@ -187,7 +177,6 @@
                                         Name = name,
                                         Gender = gender,
                                         Password = password,
-                                        NickName = nickname,
                                         Won = 0,
                                         Lost = 0,
                                         Played = 0
@@ -197,8 +186,8 @@
 
                 AutoLogin(newPlayer);
 
-                Email.SendSimpleEmail(newPlayer.Email); // TODO: Change call to this static class
-
+                var response = Email.SendSimpleEmail(newPlayer.Email); // TODO: Change call to this static class
+                
                 return this.Redirect(Url.Action("Index", "Players") + "#" + newPlayer.Id);
             }
 
@@ -236,11 +225,6 @@
             {
                 var currentUser = (Player)Session["User"];
 
-                if (this.Settings.EnableDomainValidation)
-                {
-                    viewModel.Player.Email += "@" + this.Settings.Domain;
-                }
-
                 if (currentUser != null
                     && (currentUser.Id == viewModel.Player.Id || currentUser.Email == this.Settings.AdminAccount))
                 {   
@@ -257,9 +241,6 @@
                     player.Password = string.IsNullOrEmpty(viewModel.Player.Password)
                                         ? player.Password
                                         : Md5.CalculateMd5(viewModel.Player.Password);
-                    player.NickName = string.IsNullOrEmpty(viewModel.Player.NickName)
-                                        ? player.NickName
-                                        : viewModel.Player.NickName;
 
                     DbHelper.SavePlayer(player);
                     viewModel.Player = player;
@@ -276,11 +257,6 @@
         [HttpPost]
         public JsonResult PlayerEmailExists(string email)
         {
-            if (this.Settings.EnableDomainValidation)
-            {
-                email += "@" + this.Settings.Domain;
-            }
-
             var query = Query.EQ("Email", email.ToLower());
             var playerCollection = this.Dbh.GetCollection<Player>("Players");
             var player = playerCollection.FindOne(query);
@@ -290,22 +266,6 @@
                 return Json(new ExistsResponse { Exists = true, Name = player.Name, Email = player.Email });
             }
     
-            return Json(new ExistsResponse { Exists = false, Name = null, Email = null });
-        }
-
-        // POST: /Account/PlayerNameExists
-        [HttpPost]
-        public JsonResult CheckIfPlayerNameExists(string name)
-        {
-            var playerCollection = this.Dbh.GetCollection<Player>("Players");
-            var query = Query.EQ("Name", name);
-            var player = playerCollection.FindOne(query);
-
-            if (player != null)
-            {
-                return Json(new ExistsResponse { Exists = true, Name = player.Name, Email = player.Email });
-            }
-
             return Json(new ExistsResponse { Exists = false, Name = null, Email = null });
         }
 

@@ -16,25 +16,12 @@
         <img id="profile-gravatar" alt="Gravatar picture" src="@Html.GetGravatarEmailHash(Model.Player.Email)"/>
     </a>
     <br/><br/>
-    if (Model.Player.Id != null && Model.Settings.EnableDomainValidation)
-    {
-        Model.Player.Email = Regex.Replace(Model.Player.Email, "@" + Model.Settings.Domain, "");
-    }
     
     @Html.LabelFor(m => Model.Player.Email, "Email")
-    @Html.TextBoxFor(m => m.Player.Email, new { placeholder = "Email", autocapitalize = "off", autocorrect = "off", @class = Model.Settings.EnableDomainValidation ? "short" : "long"})
-    
-    if (Model.Settings.EnableDomainValidation)
-    {
-        <span>@@</span>@Model.Settings.Domain
-    }
-    
+    @Html.TextBoxFor(m => m.Player.Email, new { placeholder = "Email", autocapitalize = "off", autocorrect = "off", @class = "long"})
     <br/><br/> 
     @Html.LabelFor(m => Model.Player.Name)
     @Html.TextBoxFor(m => Model.Player.Name, new { placeholder = "Name"})
-    <br/><br/>
-    @Html.LabelFor(m => Model.Player.NickName, "Nickname (max 5 char.)")
-    @Html.TextBoxFor(m => Model.Player.NickName, new { placeholder = "Nickname", maxlength = "5"})
     <br/><br/>
     @Html.LabelFor(m => Model.Player.Gender, "Gender")
     @Html.DropDownListFor(m => Model.Player.Gender, Model.Genders)

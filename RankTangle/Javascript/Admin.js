@@ -3,7 +3,6 @@
     /* ******************************************************************
      * Admin View
      */
-    var $enableDomainValidation = $('#Settings_EnableDomainValidation');
     var $selectPlayer = $('#select-player');
     var $copyProdToStaging = $('#copy-prod-to-staging');
     var $replayMatches = $('#replay-matches');
@@ -68,25 +67,8 @@
         });
     });
 
-    toggleDomainField($enableDomainValidation);
-    
-    $enableDomainValidation.on('change', function () {
-        toggleDomainField($enableDomainValidation);
-    });
-
     $appNameTextBox.focus();
 });
-
-
-function toggleDomainField($checkbox) {
-    var $textBox = $('#Settings_Domain');
-
-    if (!$checkbox.attr('checked')) {
-        $textBox.attr('disabled', 'disabled');
-    } else {
-        $textBox.removeAttr('disabled').focus();
-    }
-}
 
 function toggleOverlay() {
     var overlay = $('#overlay');

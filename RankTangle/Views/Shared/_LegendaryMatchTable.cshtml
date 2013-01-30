@@ -20,63 +20,23 @@
         @foreach (var match in Model.Matches)
         {
             <tr>
-                @* TeamA Teams names and Nicknames *@
+                @* TeamA Teams names *@
                 <td class="team-a team-names @if (match.TeamAScore > match.TeamBScore) { <text>winner</text> }">
                     <span class="names">
                         @foreach (var player in match.TeamA.TeamPlayers)
                         {
                             <a class="@player.Id" href="@Url.Action("Player","Stats", new {playerId = player.Id })">@player.Name</a>
                         }
-                        @*
-                        <a class="@match.TeamAPlayer1.Id" href="@Url.Action("Player","Stats", new {playerId = @match.TeamAPlayer1.Id })">@match.TeamAPlayer1.Name</a>
-                        @if (match.CountTeamAPlayers == 2)
-                        {
-                            <br/>
-                            <a class="@match.TeamAPlayer2.Id" href="@Url.Action("Player","Stats", new {playerId = @match.TeamAPlayer2.Id })">@match.TeamAPlayer2.Name</a>
-                        }*@
-                    </span>
-                    <span class="nicknames">
-                        @foreach (var player in match.TeamA.TeamPlayers)
-                        {
-                            <a class="@player.Id" href="@Url.Action("Player","Stats", new {playerId = player.Id })">@player.NickName</a>
-                        }
-                        @*
-                        <a class="@match.TeamAPlayer1.Id" href="@Url.Action("Player","Stats", new {playerId = @match.TeamAPlayer1.Id })">@match.TeamAPlayer1.NickName</a>
-                        @if (match.CountTeamAPlayers == 2)
-                        {
-                            <br/>
-                            <a class="@match.TeamAPlayer2.Id" href="@Url.Action("Player","Stats", new {playerId = @match.TeamAPlayer2.Id })">@match.TeamAPlayer2.NickName</a>
-                        }*@
                     </span>
                 </td>
                 
-                @* TeamB Teams names and Nicknames *@
+                @* TeamB Teams names *@
                 <td class="team-b team-names @if (match.TeamBScore > match.TeamAScore) { <text>winner</text> }">
                     <span class="names">
                         @foreach (var player in match.TeamB.TeamPlayers)
                         {
                             <a class="@player.Id" href="@Url.Action("Player","Stats", new {playerId = player.Id })">@player.Name</a>
                         }
-                    @*
-                        <a class="@match.TeamBPlayer1.Id" href="@Url.Action("Player","Stats", new {playerId = @match.TeamBPlayer1.Id })">@match.TeamBPlayer1.Name</a>
-                        @if (match.CountTeamBPlayers == 2)
-                        {
-                            <br/>
-                            <a class="@match.TeamBPlayer2.Id" href="@Url.Action("Player","Stats", new {playerId = @match.TeamBPlayer2.Id })">@match.TeamBPlayer2.Name</a>
-                        }*@
-                    </span>
-                    <span class="nicknames">
-                        @foreach (var player in match.TeamB.TeamPlayers)
-                        {
-                            <a class="@player.Id" href="@Url.Action("Player","Stats", new {playerId = player.Id })">@player.NickName</a>
-                        }
-                        @*
-                        <a class="@match.TeamBPlayer1.Id" href="@Url.Action("Player","Stats", new {playerId = @match.TeamBPlayer1.Id })">@match.TeamBPlayer1.NickName</a>
-                        @if (match.CountTeamBPlayers == 2)
-                        {
-                            <br/>
-                            <a class="@match.TeamBPlayer2.Id" href="@Url.Action("Player","Stats", new {playerId = @match.TeamBPlayer2.Id })">@match.TeamBPlayer2.NickName</a>
-                        }*@
                     </span>
                 </td>
                 

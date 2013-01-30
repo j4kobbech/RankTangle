@@ -49,8 +49,7 @@
             var player = viewModel.Player;
             viewModel.ListOfErrorMessages.Clear();
 
-            if (string.IsNullOrEmpty(player.Email) || string.IsNullOrEmpty(player.Name)
-                    || string.IsNullOrEmpty(player.NickName) || string.IsNullOrEmpty(player.Password))
+            if (string.IsNullOrEmpty(player.Email) || string.IsNullOrEmpty(player.Name) || string.IsNullOrEmpty(player.Password))
             {
                 viewModel.ListOfErrorMessages.Add("All fields are required to register.");
             } 
@@ -62,7 +61,7 @@
 
             if (PlayerEmailAlreadyInUse(player))
             {
-                viewModel.ListOfErrorMessages.Add("A player with this name already exists");                
+                viewModel.ListOfErrorMessages.Add("A player with this email already exists");                
             }
 
             return viewModel;
