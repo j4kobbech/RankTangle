@@ -14,7 +14,7 @@
     
     @if (Model.Player.Played == 0)
     {
-        <span>@Model.Player.Name has no Stats yet ...</span>
+        <span>@Model.Player.Name has no stats to show ...</span>
     }
     else
     {
@@ -112,14 +112,6 @@
                     {
                         <a href="@Url.Action("Player", "Stats", new { playerId = @player.Id })">@player.Name</a>
                     }
-                @*
-                <a href="@Url.Action("Player","Stats", new {playerId = @Model.LatestMatch.TeamBPlayer1.Id })">@Model.LatestMatch.TeamBPlayer1.Name</a>
-                if (@String.IsNullOrEmpty(Model.LatestMatch.TeamBPlayer2.Name) == false)
-                {
-                    <text>&</text>
-                    <a href="@Url.Action("Player","Stats", new {playerId = @Model.LatestMatch.TeamBPlayer2.Id })">@Model.LatestMatch.TeamBPlayer2.Name</a>
-                }
-                *@
                 }
                 else
                 {
@@ -127,33 +119,28 @@
                     {
                         <a href="@Url.Action("Player", "Stats", new { playerId = @player.Id })">@player.Name</a>
                     }
-                @*
-                <a href="@Url.Action("Player","Stats", new {playerId = @Model.LatestMatch.TeamAPlayer1.Id })">@Model.LatestMatch.TeamAPlayer1.Name</a>
-                if (@String.IsNullOrEmpty(Model.LatestMatch.TeamAPlayer2.Name) == false)
-                {
-                    <text>&</text>
-                    <a href="@Url.Action("Player","Stats", new {playerId = @Model.LatestMatch.TeamAPlayer2.Id })">@Model.LatestMatch.TeamAPlayer2.Name</a>
-                }
-                *@
                 }
             </div>
         </div>
     }
 </fieldset>
 
-<fieldset>
-    <legend>Rating  Chart</legend>
-    <div id="player-rating-chart" data-subject-id="@Model.Player.Id" data-subject-name="@Model.Player.Name"></div>
-</fieldset>
+@if (Model.Player.Played > 0)
+{
+    <fieldset>
+        <legend>Rating  Chart</legend>
+        <div id="player-rating-chart" data-subject-id="@Model.Player.Id" data-subject-name="@Model.Player.Name"></div>
+    </fieldset>
 
-<fieldset id="player-matches">
-    <legend>@(Model.Player.Name)s Fights</legend>
-    @if (Model.PlayedMatches.Any())
-    {
-        Html.RenderPartial("_LegendaryMatchTable", new MatchTableViewModel { Matches = Model.PlayedMatches, User = null, Settings = Model.Settings });
-    }
-    else
-    {
-        <text><span class="dimmed">@Model.Player.Name hasn't played a match yet ...</span></text>
-    }
-</fieldset>
+    <fieldset id="player-matches">
+        <legend>@(Model.Player.Name)s Fights</legend>
+        @if (Model.Player.Played > 0)
+        {
+            Html.RenderPartial("_LegendaryMatchTable", new MatchTableViewModel { Matches = Model.PlayedMatches, User = null, Settings = Model.Settings });
+        }
+        else
+        {
+            <text><span class="dimmed">@Model.Player.Name hasn't played a match yet ...</span></text>
+        }
+    </fieldset>
+}

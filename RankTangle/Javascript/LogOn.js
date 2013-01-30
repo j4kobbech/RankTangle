@@ -1,4 +1,4 @@
-﻿jQuery(window).load(function() {
+﻿jQuery(window).load(function () {
     $('#Email').focus();
 
     $('form[name="logon-player"]').on('submit', function (e) {

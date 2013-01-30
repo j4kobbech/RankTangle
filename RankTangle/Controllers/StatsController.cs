@@ -28,13 +28,16 @@
 
             if (matchesList.Any())
             {
-                viewModel.MostFights = StatsControllerHelpers.GetMostFights();
-                viewModel.MostWins = StatsControllerHelpers.GetMostWins();
-                viewModel.MostLosses = StatsControllerHelpers.GetMostLosses();
-                viewModel.TopRanked = StatsControllerHelpers.GetTopRanked();
-                viewModel.BottomRanked = StatsControllerHelpers.GetBottomRanked();
-                viewModel.HighestRatingEver = StatsControllerHelpers.GetHighestOverAllRatingEver(players);
-                viewModel.LowestRatingEver = StatsControllerHelpers.GetLowestOverAllRatingEver(players);
+                using (Profiler.Step("Step A"))
+                {
+                    viewModel.MostFights = StatsControllerHelpers.GetMostFights();
+                    viewModel.MostWins = StatsControllerHelpers.GetMostWins();
+                    viewModel.MostLosses = StatsControllerHelpers.GetMostLosses();
+                    viewModel.TopRanked = StatsControllerHelpers.GetTopRanked();
+                    viewModel.BottomRanked = StatsControllerHelpers.GetBottomRanked();
+                    viewModel.HighestRatingEver = StatsControllerHelpers.GetHighestOverAllRatingEver(players);
+                    viewModel.LowestRatingEver = StatsControllerHelpers.GetLowestOverAllRatingEver(players);
+                }
 
                 var winningStreak = StatsControllerHelpers.GetLongestWinningStreak(matchesList);
                 winningStreak.Player = DbHelper.GetPlayer(winningStreak.Player.Id);

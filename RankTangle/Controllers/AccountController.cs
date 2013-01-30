@@ -145,7 +145,7 @@
         // GET: /Account/Register
         public ActionResult Register()
         {
-            var viewModel = new PlayerBaseDataViewModel
+            var viewModel = new RegisterViewModel
                                 {
                                     Player = new Player(),
                                     Settings = this.Settings
@@ -155,10 +155,18 @@
 
         // POST: /Account/Register
         [HttpPost]
-        public ActionResult Register(PlayerBaseDataViewModel viewModel)
+        public ActionResult Register(RegisterViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
+                viewModel = AccountControllerHelpers.ValidateRegisterViewModel(viewModel);
+                if (viewModel.ListOfErrorMessages.Count > 0)
+                {
+                    viewModel.Settings = this.Settings;
+                    viewModel.FormIsInvalid = true;
+                    return this.View(viewModel);
+                }
+
                 var email = viewModel.Player.Email.ToLower();
                 if (this.Settings.EnableDomainValidation)
                 {
@@ -188,12 +196,13 @@
                 playerCollection.Save(newPlayer);
 
                 AutoLogin(newPlayer);
-                Email.SendSimpleEmail(); // TODO: Change call to this static class
+
+                Email.SendSimpleEmail(newPlayer.Email); // TODO: Change call to this static class
 
                 return this.Redirect(Url.Action("Index", "Players") + "#" + newPlayer.Id);
             }
 
-            return this.View("Register");
+            return RedirectToAction("Register");
         }
 
         [HttpGet]
@@ -207,7 +216,7 @@
                 var refUrl = HttpContext.Request.UrlReferrer != null
                                  ? HttpContext.Request.UrlReferrer.AbsoluteUri
                                  : "/Players";
-                return this.View(new PlayerBaseDataViewModel
+                return this.View(new EditViewModel
                                      {
                                          Player = player, 
                                          Settings = this.Settings,
@@ -219,7 +228,7 @@
         }
 
         [HttpPost]
-        public ActionResult Edit(PlayerBaseDataViewModel viewModel)
+        public ActionResult Edit(EditViewModel viewModel)
         {
             viewModel.SaveSuccess = false;
 
@@ -234,7 +243,7 @@
 
                 if (currentUser != null
                     && (currentUser.Id == viewModel.Player.Id || currentUser.Email == this.Settings.AdminAccount))
-                {
+                {   
                     var player = DbHelper.GetPlayer(viewModel.Player.Id);
                     var gender = viewModel.Player.Gender;
 
@@ -265,8 +274,13 @@
         }
 
         [HttpPost]
-        public JsonResult PlayerEmailIsValid(string email)
+        public JsonResult PlayerEmailExists(string email)
         {
+            if (this.Settings.EnableDomainValidation)
+            {
+                email += "@" + this.Settings.Domain;
+            }
+
             var query = Query.EQ("Email", email.ToLower());
             var playerCollection = this.Dbh.GetCollection<Player>("Players");
             var player = playerCollection.FindOne(query);
@@ -281,7 +295,7 @@
 
         // POST: /Account/PlayerNameExists
         [HttpPost]
-        public JsonResult PlayerNameExists(string name)
+        public JsonResult CheckIfPlayerNameExists(string name)
         {
             var playerCollection = this.Dbh.GetCollection<Player>("Players");
             var query = Query.EQ("Name", name);

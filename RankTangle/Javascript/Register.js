@@ -1,15 +1,15 @@
-﻿jQuery(window).load(function() {
-    $('#Email').focus();
+﻿jQuery(window).load(function () {
+    $('#Player_Email').focus();
 
     // Form Validation
-    var $inputFields = $('input').not('[type="hidden"]');
+    var $AllInputFieldsNotHidden = $('input').not('[type="hidden"]');
     
     $('form[name="register-player"]').on('submit', function (e) {
-        var email = $('#Email').val(),
-            name = $('#Player_Name').val(),
-            password = $('#Player_Password').val(),
-            repeatPassword = $('#Player_RepeatPassword').val(),
-            missingFields = false;
+        var email = $('#Player_Email').val();
+        var name = $('#Player_Name').val();
+        var password = $('#Player_Password').val();
+        var repeatPassword = $('#Player_RepeatPassword').val();
+        var missingFields = false;
 
         $.each($('input[type="text"], input[type="email"]'), function () {
             var $this = $(this);
@@ -17,9 +17,9 @@
         });
 
         // Validate that all fields are filled out
-        $.each($inputFields, function () {
+        $.each($AllInputFieldsNotHidden, function () {
             var $this = $(this);
-            if (!!$this.val() === false) {
+            if (!$this.val()) {
                 missingFields = true;
                 return;
             }
@@ -32,7 +32,7 @@
         }
 
         // Validate emails field
-        if (emailIsValid(email) === false) {
+        if (emailExists(email) === false) {
             displayErrorMessage("You must submit a valid trustpilot email.", "Email");
         }
 
@@ -52,45 +52,44 @@
         }
     });
 
-    $('#Email').on('change', function() {
-        var playerEmail = $(this).val();
-
-        var $nickName = $('#NickName');
-        if (!!$nickName.val() === false) {
-            $nickName.val(playerEmail.substr(0,5));
-        }
+    $('#Player_Name').on('change', function (e) {
+        var playerNickName = $('#Player_NickName');
+        var playerName = e.target.value;
         
-        if (!playerEmail === false) {
+        if (!playerNickName.val()) { // only set the nickname automatically if the input field is already empty
+            playerNickName.val(playerName.substr(0,5));
+        }
+    });
+
+    $('#Player_Email').on('change', function () {
+        var playerEmail = $(this).val();
+        
+        if (!playerEmail) {
             $.ajax({
                 type: "get",
                 url: "/Account/GetGravatarUrl/",
                 data: { emailPrefix: playerEmail},
                 success: function (jsonObj) {
-                    $("#profile-gravatar").attr("src",jsonObj.url);
+                    $("#profile-gravatar").attr("src", jsonObj.url);
                 }
             });
         }
-    });
 
-    $('#delete-player').on('click', 'a', function (e) {
-        if (confirm("Delete your Player?") === false) {
-            e.preventDefault();
-            return false;
-        }
+        emailExists(playerEmail);
     });
 });
 
 // Synch call to server to check if email is alredy registered
-function emailIsValid(email) {
+function emailExists(email) {
     $.ajax({
         type: 'post',
-        url: '/Account/PlayerEmailIsValid',
+        url: '/Account/PlayerEmailExists',
         cache: false,
         data: { email: email || "" },
         dataType: 'json',
         async: false,
         success: function (response) {
-            if (response.isValid) {
+            if (response.Exists) {
                 displayErrorMessage("A player with this email already exists ("+response.Name+")", "Email");
             } else {
                 clearErrorMessage("Email");

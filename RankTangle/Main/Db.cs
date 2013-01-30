@@ -1,15 +1,15 @@
 ﻿namespace RankTangle.Main
 {
     using System.Configuration;
-    using RankTangle.Models.Base;
     using MongoDB.Driver;
-    
+    using RankTangle.Models.Base;
+
     public class Db
     {
         public Db(Environment environment = Environment.Production)
         {
             // Determine environment
-            this.ConnectionString = ConfigurationManager.AppSettings["Database"];
+            this.ConnectionString = ConfigurationManager.AppSettings["MONGOLAB_URI"];
 
             // Try to connect to server
             this.DatabaseName = MongoUrl.Create(this.ConnectionString).DatabaseName;

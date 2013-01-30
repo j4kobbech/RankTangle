@@ -12,6 +12,7 @@
     <div>
         @Model.MatchCount.ToString(CultureInfo.InvariantCulture)
     </div>
+            @*
     
     @if (Model.MatchCount > 0)
     {
@@ -66,8 +67,6 @@
 
         <div class="label">Biggest Win:</div>
         <div>
-            @*
-            *@
             <a href="@Url.Action("Player", "Stats", new { playerId = Model.BiggestRatingWin.Match.GetWinningTeam().TeamPlayers.First().Id })">@Model.BiggestRatingWin.Match.GetWinningTeam().TeamPlayers.First().Name</a>
             @if (Model.BiggestRatingWin.Match.GetWinningTeam().TeamPlayers.Count == 2)
             {
@@ -82,4 +81,5 @@
             <span class="thin">and gained</span> @Model.BiggestRatingWin.Rating.ToString("F2") <span class="thin">rating points.</span>
         </div>
     }
+            *@
 </fieldset>

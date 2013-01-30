@@ -1,14 +1,14 @@
-﻿jQuery(window).load(function() {
+﻿jQuery(window).load(function () {
 
     /* ******************************************************************
      * Admin View
      */
-    var $enableDomainValidation = $('#Settings_EnableDomainValidation'),
-        $selectPlayer = $('#select-player'),
-        $copyProdToStaging = $('#copy-prod-to-staging'),
-        $replayMatches = $('#replay-matches'),
-        $listEmails = $('#list-player-emails'),
-        $appNameTextBox = $('#Settings_Name');
+    var $enableDomainValidation = $('#Settings_EnableDomainValidation');
+    var $selectPlayer = $('#select-player');
+    var $copyProdToStaging = $('#copy-prod-to-staging');
+    var $replayMatches = $('#replay-matches');
+    var $listEmails = $('#list-player-emails');
+    var $appNameTextBox = $('#Settings_Name');
 
     $selectPlayer.on('change', function () {
         $.ajax({
@@ -58,7 +58,9 @@
             url: '/Admin/GetPlayerEmails/',
             success: function (data) {
                 toggleOverlay();
-                var $textareaWrapper = $('#list-of-emails').html('').append('<textarea></textarea>');
+                var $textareaWrapper = $('#list-of-emails')
+                        .html('')
+                        .append('<textarea></textarea>');
                 for (var index in data) {
                     $textareaWrapper.find('textarea').append(data[index]+',').focus();
                 }

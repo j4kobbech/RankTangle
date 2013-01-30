@@ -1,29 +1,65 @@
-﻿@model PlayerBaseDataViewModel
+﻿@using System.Text.RegularExpressions
+@model RegisterViewModel
+@{ ViewBag.Title = "Register User"; }
 
-@{
-    ViewBag.Title = "Register User";
-}
-
-@section Javascript{ <script async src="@Url.Content("~/Javascript/Register.js")"></script> }
+@section Javascript{ <script src="@Url.Content("~/Javascript/Register.js")"></script> }
 @section Css{ <link rel="stylesheet" href="@Url.Content("~/Css/Account.css")"/>}
-
 
 <h3>Register a New User</h3>
 <p>All fields are required to register.</p>
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new{ name = "register-player" }))
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { name = "register-player" }))
 {
-    <div>
-        @Html.Partial("_PlayerBaseData", Model)
+    @Html.HiddenFor(m => m.Player.Id)
 
-        <div>@Html.LabelFor(m => Model.RepeatPassword, "Repeat password")</div>
-        <div>@Html.Password("Password", Model.RepeatPassword, new { placeholder = "Repeat password", @id = "Player_RepeatPassword" })</div>
+    <a href="http://www.gravatar.com">
+        <img id="profile-gravatar" alt="Gravatar picture" src="@Html.GetGravatarEmailHash(Model.Player.Email)"/>
+    </a>
+    <br/><br/>
+    if (Model.Player.Id != null && Model.Settings.EnableDomainValidation)
+    {
+        Model.Player.Email = Regex.Replace(Model.Player.Email, "@" + Model.Settings.Domain, "");
+    }
+    
+    @Html.LabelFor(m => Model.Player.Email, "Email")
+    @Html.TextBoxFor(m => m.Player.Email, new { placeholder = "Email", autocapitalize = "off", autocorrect = "off", @class = Model.Settings.EnableDomainValidation ? "short" : "long"})
+    
+    if (Model.Settings.EnableDomainValidation)
+    {
+        <span>@@</span>@Model.Settings.Domain
+    }
+    
+    <br/><br/> 
+    @Html.LabelFor(m => Model.Player.Name)
+    @Html.TextBoxFor(m => Model.Player.Name, new { placeholder = "Name"})
+    <br/><br/>
+    @Html.LabelFor(m => Model.Player.NickName, "Nickname (max 5 char.)")
+    @Html.TextBoxFor(m => Model.Player.NickName, new { placeholder = "Nickname", maxlength = "5"})
+    <br/><br/>
+    @Html.LabelFor(m => Model.Player.Gender, "Gender")
+    @Html.DropDownListFor(m => Model.Player.Gender, Model.Genders)
+    <br/><br/>
+    @Html.LabelFor(m => Model.Player.Password)
+    @Html.PasswordFor(m => Model.Player.Password, new { placeholder = "Password"})
+    <br/><br/>
+    @Html.LabelFor(m => Model.RepeatPassword, "Repeat password")
+    @Html.Password("Password", Model.RepeatPassword, new { placeholder = "Repeat password", @id = "Player_RepeatPassword" })
 
-        <div class="validation-message small All"></div>
-        <div class="validation-message small Email"></div>
-        <div class="validation-message small Name"></div>
-        <div class="validation-message small Password"></div>
+    if (Model.FormIsInvalid)
+     {
+         foreach (var errorMessage in Model.ListOfErrorMessages)
+         {
+             <div class="validation-message small All">@errorMessage</div>
+         }
 
-        <p><input class="button" type="submit" value="Register" /></p>
-    </div>
+     }
+     else
+     {
+        <div class="validation-message small All hide"></div>
+     }
+    <div class="validation-message small Email hide"></div>
+    <div class="validation-message small Name hide"></div>
+    <div class="validation-message small Password hide"></div>
+
+    <p><input class="button" type="submit" value="Register" /></p>
 }

@@ -28,7 +28,7 @@ table .winner {
 
 #pending-matches .names, #pending-matches .odds, #pending-matches .created {
   display: none; }
-#pending-matches .delete div, #pending-matches .resolve div {
+#pending-matches .delete div {
   width: 15px;
   margin: 0 auto; }
 

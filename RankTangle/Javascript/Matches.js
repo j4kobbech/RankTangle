@@ -9,17 +9,17 @@
         $submitMatchForm = $('#submit-match-form');
 
     $openForm.on('click', function () {
-        $submitMatchForm.slideToggle('fast', function() {
-            $submitMatchForm.css({'overflow':''});
+        $submitMatchForm.slideToggle('fast', function () {
+            $submitMatchForm.css({'overflow': ''});
         });
     });
 
     $('#create-match-button').on('click', function (e) {
         var errm = "";
-        if (!!$r1.val() === false || !!$b1.val() === false) {
+        if (!$r1.val() || !$b1.val()) {
             errm = 'Choose at least a Player 1 on each team';
         }
-        if (!!errm === true) {
+        if (!!errm) {
             e.preventDefault();
             displayErrorMessage(errm);
         }
@@ -27,7 +27,7 @@
 
     var valueBeforeChange;
     var $thisSelect;
-    
+
     $playerSelects.on('focus', function (e) {
         $thisSelect = $(e.target);
         valueBeforeChange = $thisSelect.find(':selected').val();
@@ -41,14 +41,14 @@
         $.each($('option[value="' + valueBeforeChange + '"]').not($thisOption), function (idx, element) {
             $(element).removeAttr('disabled');
         });
-        
+
         // if the chosen option is default (empty) 
-        if (!$thisOption.val() === false) {
+        if (!$thisOption.val()) {
             $.each($('option[value="' + $thisOption.val() + '"]').not($thisOption), function (idx, element) {
-                $(element).attr('disabled','disabled');
+                $(element).attr('disabled', 'disabled');
             });
         }
-        
+
         // If at least one player on each team is selected, then show the score sliders
         if (!!$teamAPlayer.val() && !!$teamBPlayer.val()) {
             $teamScores.slideDown('fast', function () {
@@ -59,24 +59,24 @@
                 $teamScores.css({ 'overflow': '' });
             });
         }
-        
+
         valueBeforeChange = $thisSelect.find(':selected').val();
     });
 
     $('.delete').on('click', 'a', function (e) {
-        if (confirm("Delete this match?") === false ) {
+        if (confirm("Delete this match?") === false) {
             e.preventDefault();
             return false;
         }
         return undefined;
     });
-    
+
     // Add a tag on the players that match the current user
     var currentUserId = $("#current-user-id").val();
-    if (!!currentUserId === true) {
+    if (!!currentUserId) {
         $("." + currentUserId).append('<sup title="It\'s you!">(*)</sup>');
     }
-    
+
     /* ******************************************************************
      * SaveMatchResult View
      */
@@ -85,18 +85,18 @@
         var errm = "",
             $teamAScore = $('#team-a-score'),
             $teamBScore = $('#team-b-score');
-        
+
         clearErrorMessage();
 
-        if (!!$r1.val() === false || !!$b1.val() === false) {
+        if (!$r1.val() || !$b1.val()) {
             errm = 'Choose at least a Player 1 on each team';
         }
 
-        if (!!errm === true) {
+        if (!!errm) {
             e.preventDefault();
             displayErrorMessage(errm);
         }
-        
+
         if ($teamAScore.val() === $teamBScore.val()) {
             displayErrorMessage("A Match must have a winner and a loser. Please resolve."); // Todo: Is this correct always?
         }
@@ -106,15 +106,11 @@
         }
     });
 
-    
     $('#team-a-score-slider').on('change', function (e) {
         $('#team-a-score').val(e.target.value);
     });
-    
+
     $('#team-b-score-slider').on('change', function (e) {
         $('#team-b-score').val(e.target.value);
     });
-    
-
-
 });

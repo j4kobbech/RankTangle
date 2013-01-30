@@ -234,8 +234,6 @@ nav, #menucontainer {
     height: 18px; }
   .editor-icon#edit-player {
     margin-right: 10px; }
-  .editor-icon#delete-player {
-    margin-right: 10px; }
 
 /* FORM LAYOUT ELEMENTS
 ----------------------------------------------------------*/
@@ -331,7 +329,6 @@ html[xmlns] .clearfix {
   background: rgba(255, 0, 0, 0.3);
   border: 2px solid red;
   color: black;
-  display: none;
   margin: 10px 0 0 0;
   padding: 2px;
   width: 98%; }

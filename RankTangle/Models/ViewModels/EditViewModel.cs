@@ -6,10 +6,12 @@
     using RankTangle.Models.Base;
     using RankTangle.Models.Domain;
 
-    public class PlayerBaseDataViewModel : BaseViewModel
+    public class EditViewModel : BaseViewModel
     {
-        public PlayerBaseDataViewModel()
+        public EditViewModel()
         {
+            this.ReferralUrl = "/Players";
+
             var genderList = new List<SelectListItem>
                                  {
                                      new SelectListItem { Text = "Male", Value = "Male" },
@@ -17,17 +19,18 @@
                                  };
 
             this.Genders = genderList;
-            this.ReferralUrl = "/Players";
         }
 
-        public Player Player { get; set; }
-
-        public string RepeatPassword { get; set; }
+        public List<SelectListItem> Genders { get; set; }
 
         public bool SaveSuccess { get; set; }
 
+        public bool FormIsInvalid { get; set; }
+
         public string ReferralUrl { get; set; }
 
-        public List<SelectListItem> Genders { get; set; }
+        public Player Player { get; set; }
+
+        public string NewPassword { get; set; }
     }
 }

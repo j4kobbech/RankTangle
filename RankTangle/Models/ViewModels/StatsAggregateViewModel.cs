@@ -8,6 +8,8 @@
     {
         public long MatchCount { get; set; }
 
+        public long PlayerCount { get; set; }
+
         public Player MostFights { get; set; }
 
         public Player MostWins { get; set; }
